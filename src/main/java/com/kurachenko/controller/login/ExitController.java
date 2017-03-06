@@ -36,8 +36,6 @@ public class ExitController{
     public String logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
-            System.out.println("Good");
-            System.out.println(auth.getPrincipal());
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout";

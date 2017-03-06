@@ -9,10 +9,6 @@ import org.springframework.util.StringUtils;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by Chalienko on 10.05.2016.
- */
-
 public class EmployeeDetails extends Employee implements UserDetails {
 
     private static final long serialVersionUID = 1L;

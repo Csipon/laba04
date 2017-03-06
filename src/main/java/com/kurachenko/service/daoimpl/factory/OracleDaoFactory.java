@@ -5,14 +5,12 @@ import com.kurachenko.exception.PersistException;
 import com.kurachenko.service.daoabstract.interfaces.DaoFactory;
 import com.kurachenko.service.daoabstract.interfaces.GenericDao;
 import com.kurachenko.service.daoimpl.*;
-import oracle.jdbc.pool.OraclePooledConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import javax.sql.PooledConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -29,7 +27,6 @@ public class OracleDaoFactory implements DaoFactory<Connection> {
     private static final String PASSWORD = "wsgf1996";
     private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
     private Map<Class, DaoCreator<Connection>> cacheService;
-    private PooledConnection pooledConnection;
     @Autowired
     private DataSource dataSource;
 
@@ -68,14 +65,6 @@ public class OracleDaoFactory implements DaoFactory<Connection> {
 
 
     public OracleDaoFactory() {
-        try {
-            pooledConnection = new OraclePooledConnection(URL, NAME, PASSWORD);
-//            Class.forName(DRIVER);//Регистрируем драйвер
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
 
         cacheService = new HashMap<>();
 

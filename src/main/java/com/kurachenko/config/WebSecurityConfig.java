@@ -26,11 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("SELECT \n" +
                 "object_id, " +
-                "(SELECT value FROM params WHERE name = 'password' AND object_id = p.object_id) as password,\n" +
+                "name as password,\n" +
                 "value as login \n" +
                 "FROM params p\n" +
                 "where value = ? and name = 'login'")
-            .authoritiesByUsernameQuery("SELECT ('ROLE_' || name) as role FROM objects WHERE object_id = (select object_id from params where value = ? and name = 'login')");
+            .authoritiesByUsernameQuery("select object_id, 'ROLE_ProjectManager' as role from params where value = ? and name = 'login'");
     }
 
     @Override
