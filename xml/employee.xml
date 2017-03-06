@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<employees>
+    <employee>
+        <hiredate>2017-02-20T21:23:23.619+02:00</hiredate>
+        <id>2</id>
+        <lastName>pasha = 1</lastName>
+        <levelQualification>MIDDLE</levelQualification>
+        <login>123123123</login>
+    </employee>
+    <employee>
+        <hiredate>2017-02-20T21:23:23.639+02:00</hiredate>
+        <id>4</id>
+        <lastName>pasha = 3</lastName>
+        <levelQualification>MIDDLE</levelQualification>
+        <login>123123123</login>
+    </employee>
+    <employee>
+        <hiredate>2017-02-20T21:23:23.639+02:00</hiredate>
+        <id>6</id>
+        <lastName>pasha = 5</lastName>
+        <levelQualification>MIDDLE</levelQualification>
+        <login>123123123</login>
+    </employee>
+    <employee>
+        <hiredate>2017-02-20T21:23:23.639+02:00</hiredate>
+        <id>8</id>
+        <lastName>pasha = 7</lastName>
+        <levelQualification>MIDDLE</levelQualification>
+        <login>123123123</login>
+    </employee>
+</employees>

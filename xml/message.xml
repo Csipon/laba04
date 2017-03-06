@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<messages>
+    <message>
+        <id>2</id>
+        <sent>2017-02-21T13:46:57.874+02:00</sent>
+        <text>message = 1</text>
+    </message>
+    <message>
+        <id>4</id>
+        <sent>2017-02-21T13:46:57.874+02:00</sent>
+        <text>message = 3</text>
+    </message>
+    <message>
+        <id>6</id>
+        <sent>2017-02-21T13:46:57.875+02:00</sent>
+        <text>message = 5</text>
+    </message>
+    <message>
+        <id>8</id>
+        <sent>2017-02-21T13:46:57.875+02:00</sent>
+        <text>message = 7</text>
+    </message>
+    <message>
+        <id>10</id>
+        <sent>2017-02-21T13:46:57.876+02:00</sent>
+        <text>message = 9</text>
+    </message>
+</messages>

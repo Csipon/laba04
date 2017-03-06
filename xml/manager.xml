@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<managers>
+    <manager>
+        <firstName>pasha = 1</firstName>
+        <id>2</id>
+        <login>123123132</login>
+    </manager>
+    <manager>
+        <firstName>pasha = 3</firstName>
+        <id>4</id>
+        <login>123123132</login>
+    </manager>
+    <manager>
+        <firstName>pasha = 5</firstName>
+        <id>6</id>
+        <login>123123132</login>
+    </manager>
+    <manager>
+        <firstName>pasha = 7</firstName>
+        <id>8</id>
+        <login>123123132</login>
+    </manager>
+    <manager>
+        <firstName>pasha = 9</firstName>
+        <id>10</id>
+        <login>123123132</login>
+    </manager>
+</managers>

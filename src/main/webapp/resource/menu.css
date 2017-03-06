@@ -1,0 +1,176 @@
+body{
+    background: url(../images/bg.png) repeat;
+}
+
+a #back{
+    color: black;
+}
+
+.messageblock{
+    width: 400px;
+    padding: 15px;
+    border: 1px solid black;
+}
+
+.date{
+    padding: 5px 10px;
+    background-color: thistle;
+}
+
+.date :hover{
+    border-bottom: 1px thistle;
+}
+
+
+.loadMessage{
+    margin: 5px 0;
+}
+
+.menu{
+    width: 90%;
+    padding-left: 5%;
+    float: left;
+}
+
+.exit{
+    float:left;
+}
+
+a {
+    color: orangered;
+    border : none;
+    font: normal bold 15px/30px Georgia, serif;
+}
+
+a:hover {  color: #4CAF50;
+}
+
+.container{
+    width: auto;
+    padding-left: 70px;
+    padding-right: 70px;
+    border: none;
+
+}
+
+.sprintC{
+    width: auto;
+}
+
+.manager{
+    padding-bottom: 30px;
+    width: auto;
+    border-bottom: 2px solid blue;
+}
+
+
+.addSubordinate {
+    padding-bottom: 30px;
+    padding-top: 30px;
+    width: auto;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse:collapse;
+}
+
+.sprint{
+    width: 796px;
+    float: left;
+}
+
+.sprintDetails{
+    font: 16pt bold sans-serif ;
+}
+
+.containerJournal{
+    overflow: auto;
+    max-height:500px;
+    width: 400px;
+    float: right;
+}
+
+.journals{
+    float: right;
+    width: 400px;
+}
+
+.journal{
+    text-align: left;
+    padding-left: 20px;
+    border: 1px solid black;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+.showDetails{
+    float: left;
+}
+
+.item{
+    text-align: left;
+    color: black;
+    border-top: 2px solid blue;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    margin-top: 20px;
+}
+
+.inform{
+    width: 800px;
+}
+
+.messages{
+    float: right;
+    width: 390px;
+}
+
+
+.tasks{
+    width: 400px;
+    float: left;
+    border: 1px solid blue;
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+
+.task{
+    text-align: left;
+    padding-left: 20px;
+    border-top: 1px solid blue;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+.infoTask{
+    float: left;
+    width: 600px;
+}
+
+
+.containerMessage{
+    overflow: auto;
+    max-height:500px;
+    width: 450px;
+}
+
+
+
+
+.successful{
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    color: #31708f;
+    background-color: #d9edf7;
+    border: 1px solid #bce8f1;
+}
+
+.clearfix{
+    clear: both;
+}
+
+p {
+    color: black;
+}

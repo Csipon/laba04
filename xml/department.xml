@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<departments>
+    <department>
+        <id>2</id>
+        <name>dept = 1</name>
+        <number>1221</number>
+    </department>
+    <department>
+        <id>4</id>
+        <name>dept = 3</name>
+        <number>1221</number>
+    </department>
+    <department>
+        <id>6</id>
+        <name>dept = 5</name>
+        <number>1221</number>
+    </department>
+    <department>
+        <id>8</id>
+        <name>dept = 7</name>
+        <number>1221</number>
+    </department>
+    <department>
+        <id>10</id>
+        <name>dept = 9</name>
+        <number>1221</number>
+    </department>
+    <department>
+        <id>12</id>
+        <name>dept = 1</name>
+        <number>1221</number>
+    </department>
+    <department>
+        <id>14</id>
+        <name>dept = 3</name>
+        <number>1221</number>
+    </department>
+    <department>
+        <id>16</id>
+        <name>dept = 5</name>
+        <number>1221</number>
+    </department>
+    <department>
+        <id>18</id>
+        <name>dept = 7</name>
+        <number>1221</number>
+    </department>
+    <department>
+        <id>20</id>
+        <name>dept = 9</name>
+        <number>1221</number>
+    </department>
+</departments>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<journals>
+    <journal>
+        <id>2</id>
+        <idSprint>1</idSprint>
+        <startTask>2017-02-21T13:50:30.420+02:00</startTask>
+    </journal>
+    <journal>
+        <id>4</id>
+        <idSprint>3</idSprint>
+        <startTask>2017-02-21T13:50:30.420+02:00</startTask>
+    </journal>
+    <journal>
+        <id>6</id>
+        <idSprint>5</idSprint>
+        <startTask>2017-02-21T13:50:30.421+02:00</startTask>
+    </journal>
+    <journal>
+        <id>8</id>
+        <idSprint>7</idSprint>
+        <startTask>2017-02-21T13:50:30.426+02:00</startTask>
+    </journal>
+    <journal>
+        <id>10</id>
+        <idSprint>9</idSprint>
+        <startTask>2017-02-21T13:50:30.426+02:00</startTask>
+    </journal>
+</journals>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<projects>
+    <project>
+        <id>2</id>
+        <name>project = 1</name>
+        <paid>1.23123123123123E11</paid>
+    </project>
+    <project>
+        <id>4</id>
+        <name>project = 3</name>
+        <paid>1.23123123123123E11</paid>
+    </project>
+    <project>
+        <id>6</id>
+        <name>project = 5</name>
+        <paid>1.23123123123123E11</paid>
+    </project>
+    <project>
+        <id>8</id>
+        <name>project = 7</name>
+        <paid>1.23123123123123E11</paid>
+    </project>
+    <project>
+        <id>10</id>
+        <name>project = 9</name>
+        <paid>1.23123123123123E11</paid>
+    </project>
+</projects>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sprints>
+    <sprint>
+        <created>2017-02-21T13:54:29.743+02:00</created>
+        <finished>false</finished>
+        <id>2</id>
+        <name>sprint = 1</name>
+        <started>false</started>
+    </sprint>
+    <sprint>
+        <created>2017-02-21T13:54:29.743+02:00</created>
+        <finished>false</finished>
+        <id>4</id>
+        <name>sprint = 3</name>
+        <started>false</started>
+    </sprint>
+    <sprint>
+        <created>2017-02-21T13:54:29.743+02:00</created>
+        <finished>false</finished>
+        <id>6</id>
+        <name>sprint = 5</name>
+        <started>false</started>
+    </sprint>
+    <sprint>
+        <created>2017-02-21T13:54:29.743+02:00</created>
+        <finished>false</finished>
+        <id>8</id>
+        <name>sprint = 7</name>
+        <started>false</started>
+    </sprint>
+    <sprint>
+        <created>2017-02-21T13:54:29.743+02:00</created>
+        <finished>false</finished>
+        <id>10</id>
+        <name>sprint = 9</name>
+        <started>false</started>
+    </sprint>
+</sprints>

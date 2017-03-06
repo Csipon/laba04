@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<customers>
+    <customer>
+        <id>2</id>
+        <login>123123123</login>
+        <name>pasha = 1</name>
+    </customer>
+    <customer>
+        <id>4</id>
+        <login>123123123</login>
+        <name>pasha = 3</name>
+    </customer>
+    <customer>
+        <id>6</id>
+        <login>123123123</login>
+        <name>pasha = 5</name>
+    </customer>
+    <customer>
+        <id>8</id>
+        <login>123123123</login>
+        <name>pasha = 7</name>
+    </customer>
+    <customer>
+        <id>10</id>
+        <login>123123123</login>
+        <name>pasha = 9</name>
+    </customer>
+    <customer>
+        <id>12</id>
+        <login>123123123</login>
+        <name>pasha = 1</name>
+    </customer>
+    <customer>
+        <id>14</id>
+        <login>123123123</login>
+        <name>pasha = 3</name>
+    </customer>
+    <customer>
+        <id>16</id>
+        <login>123123123</login>
+        <name>pasha = 5</name>
+    </customer>
+    <customer>
+        <id>18</id>
+        <login>123123123</login>
+        <name>pasha = 7</name>
+    </customer>
+    <customer>
+        <id>20</id>
+        <login>123123123</login>
+        <name>pasha = 9</name>
+    </customer>
+</customers>

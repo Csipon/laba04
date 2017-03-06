@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="@localhost" uuid="8e863d88-dff5-4dca-b21d-07649377f9f2">
+      <driver-ref>oracle</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@localhost:1521:oxeygen</jdbc-url>
+      <driver-properties>
+        <property name="database" value="//localhost:1521/oxeygen" />
+      </driver-properties>
+    </data-source>
+  </component>
+</project>
