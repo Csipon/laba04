@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +25,7 @@ public class ExitController{
     /**
      * Servlet for logout
      * */
-    @RequestMapping(value = "/exit")
+    @RequestMapping(value = "/exit", method = RequestMethod.GET)
     public String exit(HttpServletRequest req) throws IOException {
         HttpSession session = req.getSession();
         session.invalidate();
@@ -32,7 +33,7 @@ public class ExitController{
         return "/login";
     }
 
-    @RequestMapping(value = "/logout")
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){

@@ -15,7 +15,7 @@
 <body>
     <div align="center">
         <h1>Hi, welcome to my page, if you is here, so your way is successful</h1>
-        <a href="/tologin">Go to login page</a>
+        <a href="/login">Go to login page</a>
         </br>
 
         <c:if test="${not empty role}">

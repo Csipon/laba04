@@ -41,7 +41,7 @@ public class ManagerController {
     /**
      * Servlet for get manager by id
      * */
-    @RequestMapping(value = "/idManager", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/idManager", method = RequestMethod.GET)
     public String information(@RequestParam Integer id, Model model){
         try{
             model.addAttribute("manager", service.getByPK(id));

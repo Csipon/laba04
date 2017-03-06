@@ -12,7 +12,8 @@
     <div class="login-container">
         <div class="login-card">
             <div class="login-form">
-                <form action="/login" method="post" class="form-horizontal">
+                <c:url var="loginUrl" value="/login" />
+                <form action="${loginUrl}" method="post" class="form-horizontal">
                     <c:if test="${not empty error}">
                         <div class="alert alert-danger">
                             ${error}

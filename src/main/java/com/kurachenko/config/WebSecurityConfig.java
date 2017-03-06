@@ -24,28 +24,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("SELECT \n" +
-                "object_id, " +
-                "name as password,\n" +
-                "value as login \n" +
-                "FROM params p\n" +
-                "where value = ? and name = 'login'")
-            .authoritiesByUsernameQuery("select object_id, 'ROLE_ProjectManager' as role from params where value = ? and name = 'login'");
+        auth.userDetailsService(userDetailsService);
+        auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("SELECT p1.object_id, p2.value as password, p1.value as login " +
+                "FROM params p1 inner JOIN params p2 on p2.OBJECT_ID = p1.OBJECT_ID and p2.name = 'password' " +
+                "where p1.value = ?")
+            .authoritiesByUsernameQuery("SELECT p.value as login, ('ROLE_' || o.name) as role FROM objects o inner join params p on p.OBJECT_ID = o.OBJECT_ID WHERE p.value = ?");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/admin/**").access("hasRole('ROLE_Administrator')")
-                .antMatchers("/manager/**").access("hasRole('ROLE_ProjectManager')")
-                .antMatchers("/employee/**").access("hasRole('ROLE_Employee')")
-                .antMatchers("/customer/**").access("hasRole('ROLE_Customer')")
+                .antMatchers("/admin/**").access("ROLE_Administrator")
+                .antMatchers("/manager/**").access("ROLE_ProjectManager")
+                .antMatchers("/employee/**").access("ROLE_Employee")
+                .antMatchers("/customer/**").access("ROLE_Customer")
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .usernameParameter("login").passwordParameter("password")
-//                .successHandler(successHandler)
+                .successHandler(successHandler)
                 .and()
                 .logout().logoutSuccessUrl("/login?logout")
                 .and()
