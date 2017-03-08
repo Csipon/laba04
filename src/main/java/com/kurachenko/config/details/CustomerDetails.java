@@ -55,6 +55,6 @@ public class CustomerDetails extends Customer implements UserDetails {
 
     @Override
     public String getUsername() {
-        return super.getName();
+        return super.getLogin();
     }
 }

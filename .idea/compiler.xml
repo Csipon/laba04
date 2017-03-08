@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="laba03" />
+        <module name="laba04" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="laba03" target="1.7" />
+      <module name="laba04" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -20,7 +20,7 @@ function selectProject() {
 }
 
 function loadSprints() {
-    var url = 'loadSprints?id=' + idProject;
+    var url = '/manager/loadSprints?id=' + idProject;
 
     init();
 
@@ -55,7 +55,7 @@ function selectSprint() {
 
 
 function loadTasks() {
-    var url = 'loadTasks?id=' + idSprint;
+    var url = '/manager/loadTasks?id=' + idSprint;
 
     init();
 
@@ -90,7 +90,7 @@ function selectTask() {
 }
 
 function loadEmployees() {
-    var url = 'loadEmployees';
+    var url = '/manager/loadEmployees';
 
     init();
 
@@ -144,7 +144,7 @@ function contains(id) {
 function saveAdded() {
     var list = JSON.stringify(empList);
     var desc = document.getElementById('description').value;
-    var url = 'addJournal?idSprint=' + idSprint + '&idTask=' + idTask + '&description=' + desc + '&list=' + list;
+    var url = '/manager/addJournal?idSprint=' + idSprint + '&idTask=' + idTask + '&description=' + desc + '&list=' + list;
     console.log(list);
     init();
     request.onreadystatechange = successfulAdd;
@@ -154,7 +154,7 @@ function saveAdded() {
 
 function successfulAdd() {
     if (request.readyState == 4 ) {
-        location.href = '/profileMgr';
+        location.href = '/manager/profileMgr';
     }
 }
 

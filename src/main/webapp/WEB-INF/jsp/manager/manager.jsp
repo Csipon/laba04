@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: HOUSE
@@ -16,9 +17,7 @@
 </head>
 <body>
     <div class="container">
-        <c:if test="${empty role or (role ne 'ADMIN' and role ne 'MANAGER')}">
-            <c:redirect url="/login"/>
-        </c:if>
+        <sec:authentication var="user" property="principal" />
         <div class="manager">
             <p><b>Project manager :</b> ${manager.id}</p>
             <p><b>First Name :</b> ${manager.name}</p>
@@ -26,7 +25,7 @@
             <p><b>Login :</b> ${manager.login}</p>
             <p><b>Password :</b>
                 <span id="password">
-                <c:forEach begin="1" step="1" end="${manager.password.length()}">*</c:forEach>
+                <c:forEach begin="1" step="1" end="${10}">*</c:forEach>
             </span>
                 <c:if test="${manager.id eq user.id}">
                     <button onclick="encodePassword()">Show</button>
@@ -65,8 +64,13 @@
         </c:if>
     </div>
     <script type="text/javascript">
+        var password = "${manager.password}";
+        function encodePassword(){
+            document.getElementById('password').innerHTML = password;
+        }
+
         function hidePassword(){
-            document.getElementById('password').innerHTML = '<c:forEach begin="1" step="1" end="${manager.password.length()}">*</c:forEach>';
+            document.getElementById('password').innerHTML = '<c:forEach begin="1" step="1" end="${10}">*</c:forEach>';
         }
     </script>
 </body>

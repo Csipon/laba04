@@ -34,7 +34,7 @@ public class UpdateController {
     @Autowired
     private SprintService sprintService;
 
-    @RequestMapping(value = "/getEmpUpdate", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/getEmpUpdate", method = RequestMethod.GET)
     public String getEmpUpdate(@RequestParam Integer id, Model model){
         try{
             model.addAttribute("emp", employeeService.getByPK(id));
@@ -57,7 +57,7 @@ public class UpdateController {
     }
 
 
-    @RequestMapping(value = "/updateSprint", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager/updateSprint", method = RequestMethod.POST)
     public String update(Sprint sprint, @RequestParam  Integer idPreviousSprint, Errors errors)
     {
         if (errors.hasErrors()) {
@@ -86,7 +86,7 @@ public class UpdateController {
     }
 
 
-    @RequestMapping(value = "/updateEmployee", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/updateEmployee", method = RequestMethod.POST)
     public String update(Employee employee, @RequestParam  Integer idDept, boolean manager, Errors errors)
     {
         if (errors.hasErrors()) {
@@ -124,7 +124,7 @@ public class UpdateController {
         return "403";
     }
 
-    @RequestMapping(value = "/getManagerUpdate", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/getManagerUpdate", method = RequestMethod.GET)
     public String getManagerUpdate(@RequestParam Integer id, Model model){
         try{
             model.addAttribute("manager", managerService.getByPK(id));
@@ -137,7 +137,7 @@ public class UpdateController {
 
 
     @Transactional
-    @RequestMapping(value = "/updateManager", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/updateManager", method = RequestMethod.POST)
     public String update(ProjectManager manager, @RequestParam  Integer idDept, Errors errors)
     {
         if (errors.hasErrors()) {
@@ -164,7 +164,7 @@ public class UpdateController {
         return "403";
     }
 
-    @RequestMapping(value = "/getCustomerUpdate", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/getCustomerUpdate", method = RequestMethod.GET)
     public String getCustomerUpdate(@RequestParam Integer id, Model model){
         try{
             model.addAttribute("customer", customerService.getByPK(id));
@@ -175,8 +175,7 @@ public class UpdateController {
     }
 
 
-    @Transactional
-    @RequestMapping(value = "/updateCustomer", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/updateCustomer", method = RequestMethod.POST)
     public String update(Customer customer, Errors errors)
     {
         if (errors.hasErrors()) {

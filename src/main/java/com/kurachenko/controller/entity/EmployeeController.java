@@ -42,7 +42,7 @@ public class EmployeeController {
     /**
      * get all employee as list
      * */
-    @RequestMapping(value = "/getAllEmployee", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/getAllEmployee", method = RequestMethod.GET)
     public String getAll(Model model){
         try {
             model.addAttribute("empList", service.getAll());
@@ -54,7 +54,7 @@ public class EmployeeController {
 
 
 
-    @RequestMapping(value = "/profileEmp", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/profileEmp", method = RequestMethod.GET)
     public String profile(){
         return "employee/main";
     }
@@ -80,7 +80,7 @@ public class EmployeeController {
      * @param id id employee which need delete
      * @param password password employee for check
      * */
-    @RequestMapping(value = "/deleteEmployee", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/deleteEmployee", method = RequestMethod.GET)
     public String delete(@RequestParam Integer id, @RequestParam String password){
 
         try{

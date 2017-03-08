@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chalienko
@@ -20,17 +21,22 @@
         <div class="logo">
             <h1>403</h1>
         </div>
-        <p class="lead text-muted">Sorry, You entered incorrect data</p>
+        <p class="lead text-muted">Sorry, You do not have access to this data</p>
         <br>
         <div class="col-lg-6 col-lg-offset-3">
             <div class="btn-group btn-group-justified">
-                <c:if test="${role eq 'ADMIN'}">
-                    <a href="/admin" class="btn btn-warning">Return to register</a>
-                </c:if>
-
-                <c:if test="${role != 'ADMIN'}">
-                    <a href="/index" class="btn btn-warning">Return to register</a>
-                </c:if>
+                <sec:authorize access="hasRole('ROLE_Administrator')">
+                    <a href="/admin/profileAdmin">Return to my cabinet</a>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_ProjectManager')">
+                    <a href="/manager/profileMgr">Return to my cabinet</a>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_Employee')">
+                    <a href="/employee/profileEmp">Return to my cabinet</a>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_Customer')">
+                    <a href="customer/profileCustomer">Return to my cabinet</a>
+                </sec:authorize>
             </div>
         </div>
     </div>

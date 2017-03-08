@@ -14,9 +14,15 @@
     <title>Profile</title>
 </head>
 <body>
+    <sec:authentication var="user" property="principal" />
     <div align="right">
-        <h3>${user.name} ${user.surname}</h3>
-        <a href="/exit">Exit</a>
+        <form action="/logout" method="post">
+            <h3>${user.name} ${user.surname}</h3>
+            <input type="submit" value="Exit"/>
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+        </form>
     </div>
     <div align="center">
         <p>Hi this is employee page</p>

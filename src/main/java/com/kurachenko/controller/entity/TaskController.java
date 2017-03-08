@@ -54,7 +54,7 @@ public class TaskController {
      *                  need for redirect after created and update
      * @param qualification this is level qualification for task
      * */
-    @RequestMapping(value = "addTask", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager/addTask", method = RequestMethod.POST)
     public String create(Task task, Integer idSprint, Integer idProject, String qualification) {
         try {
             Task temp = service.create();

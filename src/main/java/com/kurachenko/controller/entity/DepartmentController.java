@@ -24,7 +24,7 @@ public class DepartmentController {
     private DepartmentService service;
 
 
-    @RequestMapping(value = "/getAllDepartment", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/getAllDepartment", method = RequestMethod.GET)
     public String getAll(Model model){
         try {
             model.addAttribute("deptList", service.getAll());
@@ -36,7 +36,7 @@ public class DepartmentController {
 
 
 
-    @RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/addDepartment", method = RequestMethod.POST)
     public String addDepartment(Department department, Errors errors)
     {
         if (errors.hasErrors()) {
@@ -73,7 +73,7 @@ public class DepartmentController {
     }
 
 
-    @RequestMapping(value = "/deleteDepartment", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/deleteDepartment", method = RequestMethod.GET)
     public String delete(Integer id, Boolean confirm){
         try{
             Department department = service.getByPK(id);
@@ -95,8 +95,7 @@ public class DepartmentController {
         return "404";
     }
 
-    @Transactional
-    @RequestMapping(value = "/createDepartment", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/createDepartment", method = RequestMethod.GET)
     public String newDepartment(){
         return "admin/register/department";
     }

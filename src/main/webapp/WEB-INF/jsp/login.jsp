@@ -12,8 +12,7 @@
     <div class="login-container">
         <div class="login-card">
             <div class="login-form">
-                <c:url var="loginUrl" value="/login" />
-                <form action="${loginUrl}" method="post" class="form-horizontal">
+                <form name='loginForm' action="<c:url value='/login' />" method="post" class="form-horizontal">
                     <c:if test="${not empty error}">
                         <div class="alert alert-danger">
                             ${error}
@@ -26,18 +25,20 @@
                     </c:if>
                     <div class="input-group input-sm">
                         <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-                        <input type="text" class="form-control" id="username" name="login" placeholder="Enter login" required>
+                        <input type="text" class="form-control" id="username" name="login" placeholder="Enter login" />
                     </div>
                     <div class="input-group input-sm">
                         <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" />
                     </div>
                     <div class="form-actions">
                         <input type="submit"
                                class="btn btn-block btn-primary btn-default" value="Log in">
                     </div>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                 </form>
+                    <input type="hidden"
+                           name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
+                </form>
             </div>
         </div>
     </div>

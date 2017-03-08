@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: HOUSE
@@ -16,9 +17,6 @@
     <title>Sprint</title>
 </head>
 <body>
-    <c:if test="${empty role or (role ne 'ADMIN' and role ne 'MANAGER' and role ne 'EMPLOYEE')}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div class="sprintC" align="center">
         <div class="sprint" align="left">
             <div class="sprintDetails">
@@ -65,42 +63,41 @@
                 </p>
             </div>
             <br/>
-            <c:choose>
-                <c:when test="${role eq 'MANAGER'}">
-                    <a href="/toCreateTask?idSprint=${sprint.id}&idProject=${idProject}"><button>Add task</button></a>
-                    <button onclick="deleteSprint('${sprint.id}', '${idProject}')">Delete</button>
-                    <div class="inform">
-                        <div class="tasks" align="center">
-                        <h1>Tasks</h1>
-                        <c:forEach items="${sprint.tasks}" var="task">
-                            <div class="task">
-                                <h3>${task.name}</h3>
-                                <p>${task.description}</p>
-                                <a href="/idTask?id=${task.id}&idSprint=${sprint.id}">Go to task</a>
-                            </div>
-                        </c:forEach>
-                    </div>
-                        <div class="messages">
-                            <button class="loadMessage" onclick="loadMessage('messageSprint', '${sprint.id}')">Load message</button>
-                            <span id="taskMessages"></span>
+            <sec:authorize access="hasRole('ROLE_ProjectManager')">
+                <a href="/toCreateTask?idSprint=${sprint.id}&idProject=${idProject}"><button>Add task</button></a>
+                <button onclick="deleteSprint('${sprint.id}', '${idProject}')">Delete</button>
+                <div class="inform">
+                    <div class="tasks" align="center">
+                    <h1>Tasks</h1>
+                    <c:forEach items="${sprint.tasks}" var="task">
+                        <div class="task">
+                            <h3>${task.name}</h3>
+                            <p>${task.description}</p>
+                            <a href="/idTask?id=${task.id}&idSprint=${sprint.id}">Go to task</a>
                         </div>
+                    </c:forEach>
+                </div>
+                    <div class="messages">
+                        <button class="loadMessage" onclick="loadMessage('messageSprint', '${sprint.id}')">Load message</button>
+                        <span id="taskMessages"></span>
                     </div>
-                    <br/>
-                </c:when>
-                <c:when test="${role eq 'EMPLOYEE'}">
-                    <button onclick="loadTask('${sprint.id}', '${user.id}')">Load my tasks</button>
-                    <span id="myTask"></span>
-                </c:when>
-            </c:choose>
+                </div>
+                <br/>
+            </sec:authorize>
+            <sec:authorize access="hasRole('ROLE_Employee')">
+                <button onclick="loadTask('${sprint.id}', '${user.id}')">Load my tasks</button>
+                <span id="myTask"></span>
+            </sec:authorize>
         </div>
 
-        <c:if test="${role eq 'MANAGER'}">
+
+        <sec:authorize access="hasRole('ROLE_ProjectManager')">
             <div class="journals">
                 <button onclick="loadSprintJournals('idSprint', '${sprint.id}')">load journals</button>
                 <span id="fieldJournal"></span>
                 <span id="fieldMakers"></span>
             </div>
-        </c:if>
+        </sec:authorize>
         <a href="/idProject?id=${idProject}">
             <button>Back</button>
         </a>

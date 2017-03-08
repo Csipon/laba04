@@ -1,6 +1,4 @@
-/**
- * Created by HOUSE on 2/23/2017.
- */
+
 var request;
 function initRequest() {
     if (window.XMLHttpRequest) {

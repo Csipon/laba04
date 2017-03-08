@@ -13,9 +13,6 @@
     <title>Departments</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div align="center">
     <table border="1">
         <tr>
@@ -50,7 +47,7 @@
                 document.getElementById("confirm").innerHTML =
                     '<br/>'+
                     '<p>Are you really want delete this department? With id ='+ id +'</p>' +
-                    '<a href="/deleteDepartment?id='+id+'&confirm=true"><img src="../../../../images/delete.png"></a>' +
+                    '<a href="/admin/deleteDepartment?id='+id+'&confirm=true"><img src="../../../../images/delete.png"></a>' +
                     '<br/>';
             }
         }

@@ -13,25 +13,17 @@ public interface StoreConstantForDB {
     String SELECT_OBJECT_ID = "SELECT object_id FROM params WHERE name = ? and value = ?";
     String SELECT_PARAMS_VALUE = "SELECT value FROM params WHERE object_id = ? AND name = ?";
     String SELECT_OBJECT = "SELECT object_id, name, description FROM objects";
+    String SELECT_OBJECT_ROLE = "SELECT name as role FROM objects WHERE object_id = ?";
     String SELECT_OBJECT_BY_ID = "SELECT object_id, name, description FROM objects WHERE object_id = ?";
-    String SELECT_LOGIN = "select value from params where value = '%s' and name = 'login'";
-    String SELECT_LOGIN_ID = "select object_id from params where value = '%s' and name = 'login'";
-    String SELECT_PASSWORD = "select value from params where value = '%s' and name = 'password' " +
-            "AND object_id = (" + SELECT_LOGIN_ID + ")";
-    String SELECT_PASSWORD_ID = "select object_id from params where value = '%s' and name = 'password' " +
-            "AND object_id = (" + SELECT_LOGIN_ID + ")";
-    String SELECT_ALL = "SELECT object_id, name as role, (" + SELECT_LOGIN + ") as login, (" + SELECT_PASSWORD + ") as password " +
-            "FROM objects WHERE object_id = (" + SELECT_PASSWORD_ID + ")";
     String UPDATE_OBJECT = "UPDATE objects SET description = ? WHERE object_id = ?";
     String UPDATE_PARAMS = "UPDATE params SET value = ? WHERE object_id = ? AND name = ?";
-    String ALL_LOGIN = "SELECT value FROM params WHERE name = 'login'";
+    String ALL_LOGIN = "SELECT object_id, value FROM params WHERE name = 'login'";
+    String ALL_PASSWORDS = "SELECT object_id, value FROM params WHERE name = 'password'";
     String DELETE_OBJECT = "DELETE objects WHERE object_id = ?";
     String DELETE_PARAMS = "DELETE params WHERE object_id = ?";
-    String SELECT_BY_LOGIN = "SELECT id, name as role, (select value from params where value = '%s' and name = 'login') as login," +
-            " (select value from params where name = 'password' AND object_id = (select object_id from params where value = '%s' and name = 'login')) as password \n" +
-            "FROM objects \n" +
-            "WHERE id = (select object_id from params where value = '%s' and name = 'login')";
-
+    String SELECT_LOGIN_PASSWORD = "SELECT p1.object_id, p1.value as login, p2.value as password, 1 as enabled " +
+            "FROM params p1 inner JOIN params p2 on p2.OBJECT_ID = p1.OBJECT_ID and p2.name = 'password' " +
+            "where p1.value = ?";
 
 
 }

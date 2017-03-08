@@ -3,7 +3,6 @@ package com.kurachenko.controller.register;
 import com.kurachenko.entity.Employee;
 import com.kurachenko.entity.enums.Qualification;
 import com.kurachenko.exception.PersistException;
-import com.kurachenko.service.daoabstract.daohelpers.CheckHelper;
 import com.kurachenko.service.daoimpl.DepartmentService;
 import com.kurachenko.service.daoimpl.EmployeeService;
 import com.kurachenko.service.daoimpl.ProjectManagerService;
@@ -23,6 +22,7 @@ import java.util.Date;
  * @since 1/14/2017
  */
 @Controller
+@RequestMapping(value = "/admin")
 public class RegisterController {
     @Autowired
     private DepartmentService deptService;
@@ -64,7 +64,7 @@ public class RegisterController {
             employee.setFirstName(emp.getName());
             employee.setLastName(emp.getSurname());
             employee.setDescription(emp.getDescription());
-            employee.setPassword(CheckHelper.passwordCode(emp.getPassword()));
+            employee.setPassword(emp.getPassword());
             employee.setLogin(emp.getLogin());
             employee.setHiredate(new Date());
             employee.setLevelQualification(Qualification.valueOf(qualification));

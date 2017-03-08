@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: HOUSE
@@ -13,8 +14,8 @@
     <title>Customer</title>
 </head>
 <body>
-
     <div class="customer">
+        <sec:authentication var="user" property="principal" />
         <p><b>Customer : </b> ${customer.id}</p>
         <p><b>Name : </b> ${customer.name}</p>
         <p><b>Surname : </b> ${customer.surname}</p>
@@ -34,16 +35,16 @@
     </div>
     <c:choose>
         <c:when test="${role eq 'ADMIN'}">
-            <a href="/getAllCustomer">Back</a>
+            <a href="/admin/getAllCustomer">Back</a>
         </c:when>
         <c:when test="${role eq 'EMPLOYEE'}">
-            <a href="/profileEmp">Back</a>
+            <a href="/employee/profileEmp">Back</a>
         </c:when>
         <c:when test="${role eq 'MANAGER'}">
-            <a href="/profileMgr">Back</a>
+            <a href="/manager/profileMgr">Back</a>
         </c:when>
         <c:when test="${role eq 'CUSTOMER'}">
-            <a href="/profileCustomer">Back</a>
+            <a href="/customer/profileCustomer">Back</a>
         </c:when>
     </c:choose>
 
@@ -51,17 +52,7 @@
     <script type="text/javascript">
         var password = "${customer.password}";
         function encodePassword(){
-            var result = "";
-            for (var i = 0; i < password.length; i++) {
-                var temp = password.charCodeAt(i);
-                if (i % 2 == 0) {
-                    temp -= 25;
-                } else {
-                    temp -= 32;
-                }
-                result += String.fromCharCode(temp);
-            }
-            document.getElementById('password').innerHTML = result;
+            document.getElementById('password').innerHTML = password;
         }
 
         function hidePassword(){

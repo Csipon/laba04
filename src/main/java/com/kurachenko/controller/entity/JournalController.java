@@ -52,7 +52,7 @@ public class JournalController {
      * @param id this is id project from which need get {@code Sprint[]}
      * @param response need for write array as string in JSON format
      * */
-    @RequestMapping(value = "/loadSprints", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/loadSprints", method = RequestMethod.GET)
     public void loadSprints(Integer id, HttpServletResponse response) {
         try {
             Project project = projectService.getByPK(id);
@@ -70,7 +70,7 @@ public class JournalController {
      * @param id this is id project from which need get {@code Task[]}
      * @param response need for write array as string in JSON format
      * */
-    @RequestMapping(value = "/loadTasks", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/loadTasks", method = RequestMethod.GET)
     public void loadTasks(Integer id, HttpServletResponse response) throws IOException {
         try {
             Sprint sprint = sprintService.getByPK(id);
@@ -89,11 +89,11 @@ public class JournalController {
      *                we a get his subordinates as {@code Employee[]}
      * @param response need for write array as string in JSON format
      * */
-    @RequestMapping(value = "/loadEmployees", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/loadEmployees", method = RequestMethod.GET)
     public void loadEmployees(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession();
-            ProjectManager manager = (ProjectManager) session.getAttribute("user");
+            ProjectManager manager = (ProjectManager) request.getUserPrincipal();
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(mapper.writeValueAsString(manager.getSubordinates()));
         } catch (PersistException | IOException e) {
@@ -111,7 +111,7 @@ public class JournalController {
      * @param list this array id employee which need add in journal, but list transport as string
      *             in JSON format
      * */
-    @RequestMapping(value = "/addJournal", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/addJournal", method = RequestMethod.GET)
     public void addJournal(Integer idSprint, Integer idTask, String description, String list) {
         try {
             Journal temp = service.create();
@@ -143,7 +143,7 @@ public class JournalController {
      *                   if yes then add journal in result list
      * @param response need fir write list of journal as string in JSON format
      * */
-    @RequestMapping(value = "/loadEmployeeTasks", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/loadEmployeeTasks", method = RequestMethod.GET)
     public void loadEmployeeTasks(Integer idSprint, Integer idEmployee, HttpServletResponse response) {
         try {
             List<Journal> allSprintJournals = service.getJournalsByNameParam("idSprint", idSprint);
@@ -183,7 +183,7 @@ public class JournalController {
      * @param id this id of parameter with help which will be search need journals
      * @param response need for write list journals as string in JSON format
      * */
-    @RequestMapping(value = "/loadSprintJournals", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/loadSprintJournals", method = RequestMethod.GET)
     public void loadSprintJournals(String paramName, Integer id, HttpServletResponse response){
         try {
             List<Journal> journals = service.getJournalsByNameParam(paramName, id);

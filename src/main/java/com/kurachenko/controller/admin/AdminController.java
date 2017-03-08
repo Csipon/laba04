@@ -29,6 +29,7 @@ import java.util.List;
  * @since 1/19/2017
  */
 @Controller
+@RequestMapping(value = "/admin")
 public class AdminController {
     @Autowired
     private EmployeeService employeeService;
@@ -71,6 +72,19 @@ public class AdminController {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
+            e.printStackTrace();
+        }
+        return "admin/manager/managers";
+    }
+
+    /**
+     * Servlet for get all managers
+     * */
+    @RequestMapping(value = "/getAllManager", method = RequestMethod.GET)
+    public String getAll(Model model){
+        try {
+            model.addAttribute("managerList", managerService.getAll());
+        }catch (PersistException e) {
             e.printStackTrace();
         }
         return "admin/manager/managers";

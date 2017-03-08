@@ -13,15 +13,12 @@
     <title>Update Employee</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div>
-        <form action="/updateEmployee" method="post">
+        <form action="/admin/updateEmployee" method="post">
             <input type="hidden" name="id" value="${emp.id}" /></p>
 
-            First name : <input type="text" value="${emp.firstName}" name="firstName"/></p>
-            Last name : <input type="text" value="${emp.lastName}" name="lastName"/></p>
+            First name : <input type="text" value="${emp.name}" name="firstName"/></p>
+            Last name : <input type="text" value="${emp.surname}" name="lastName"/></p>
             Login : <input type="text" value="${emp.login}" name="login"/></p>
             Password : <input type="text" value="${emp.password}" name="password"/></p>
             Description : <input type="text" value="${emp.description}" name="description"/></p>

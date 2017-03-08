@@ -13,9 +13,6 @@
     <title>Projects</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div align="center">
         <table border="1">
             <tr>
@@ -44,7 +41,7 @@
             </c:forEach>
         </table>
         <p id="confirm"></p>
-        <a href="/admin">
+        <a href="/admin/profileAdmin">
             <button>Back</button>
         </a>
     </div>
@@ -54,7 +51,7 @@
                 document.getElementById("confirm").innerHTML =
                     '<br/>'+
                     '<p>Are you really want delete this project? With id ='+ id +'</p>' +
-                    '<a href="/deleteProject?id='+id+'&confirm=true"><img src="../../../../images/delete.png"></a>' +
+                    '<a href="/admin/deleteProject?id='+id+'&confirm=true"><img src="../../../../images/delete.png"></a>' +
                     '<br/>';
             }
         }

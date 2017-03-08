@@ -13,11 +13,8 @@
     <title>Update customer</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div>
-        <form action="/updateCustomer" method="post">
+        <form action="/admin/updateCustomer" method="post">
             <input type="hidden" name="id" value="${customer.id}" /></p>
 
             Name : <input type="text" value="${customer.name}" name="name"/></p>

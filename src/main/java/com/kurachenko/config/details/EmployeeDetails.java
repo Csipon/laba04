@@ -50,7 +50,7 @@ public class EmployeeDetails extends Employee implements UserDetails {
 
     @Override
     public String getUsername() {
-        return super.getName();
+        return super.getLogin();
     }
 
 }

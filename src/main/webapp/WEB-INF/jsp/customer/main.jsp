@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: HOUSE
@@ -14,8 +15,14 @@
 </head>
 <body>
     <div align="right">
-        <h3>${user.name} ${user.surname}</h3>
-        <a href="/exit">Exit</a>
+        <sec:authentication var="user" property="principal" />
+        <form action="/logout" method="post">
+            <h3>${user.name} ${user.surname}</h3>
+            <input type="submit" value="Exit"/>
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+        </form>
     </div>
     <div>
         <h2 align="center">Hi, this is customer profile</h2>

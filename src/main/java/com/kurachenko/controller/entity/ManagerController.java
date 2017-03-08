@@ -23,25 +23,16 @@ public class ManagerController {
     @Autowired
     private ProjectManagerService service;
 
-
-    /**
-     * Servlet for get all managers
-     * */
-    @RequestMapping(value = "/getAllManager", method = RequestMethod.GET)
-    public String getAll(Model model){
-        try {
-            model.addAttribute("managerList", service.getAll());
-        }catch (PersistException e) {
-            e.printStackTrace();
-        }
-        return "admin/manager/managers";
+    @RequestMapping(value = "/manager/profileMgr", method = RequestMethod.GET)
+    public String profile(){
+        return "manager/main";
     }
 
 
     /**
      * Servlet for get manager by id
      * */
-    @RequestMapping(value = "/manager/idManager", method = RequestMethod.GET)
+    @RequestMapping(value = "/idManager", method = RequestMethod.GET)
     public String information(@RequestParam Integer id, Model model){
         try{
             model.addAttribute("manager", service.getByPK(id));
@@ -57,7 +48,7 @@ public class ManagerController {
      * @param id identified manager
      * @param password password manager, need for confirm
      * */
-    @RequestMapping(value = "/deleteManager", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/deleteManager", method = RequestMethod.GET)
     public String delete(@RequestParam Integer id, @RequestParam String password){
 
         try{

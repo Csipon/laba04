@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -9,13 +10,8 @@
     <title>Task</title>
 </head>
 <body>
-    <c:if test="${empty role or (role ne 'ADMIN' and role ne 'MANAGER' and role ne 'EMPLOYEE')}">
-        <c:redirect url="/login"/>
-    </c:if>
-    <c:if test="${role eq 'EMPLOYEE' and not empty accept}">
-        <p>${accept}</p>
-    </c:if>
     <div class="task">
+        <sec:authentication var="user" property="principal" />
         <div class="infoTask">
             <p><b>Task :                </b> ${task.id}</p>
             <p><b>project :             </b> ${idProject}</p>
@@ -68,21 +64,21 @@
         </div>
         <div class="clearfix"></div>
 
-        <c:if test="${role eq 'EMPLOYEE'}">
+        <sec:authorize access="hasRole('ROLE_Employee')">
             <button id="sentMessage" onclick="makeMessage('${user.id}', '${task.id}', '${idSprint}', '${idProject}','simple message')">Send message</button>
             <br/>
             <span id="fieldMessage"></span>
-        </c:if>
+        </sec:authorize>
 
-        <c:if test="${role eq 'MANAGER'}">
+        <sec:authorize access="hasRole('ROLE_ProjectManager')">
             <button onclick="deleteTask('${task.id}', '${idSprint}', '${idProject}')">Delete</button>
-        </c:if>
+        </sec:authorize>
 
 
-        <c:if test="${role eq 'MANAGER' or role eq 'EMPLOYEE'}">
+        <sec:authorize access="hasRole('ROLE_ProjectManager or ROLE_Employee')">
             <button class="loadMessage" onclick="loadMessage('messageTask', '${task.id}')">Load message</button>
             <span id="taskMessages"></span>
-        </c:if>
+        </sec:authorize>
         <br/>
         <a href="/idSprint?id=${idSprint}&idProject=${idProject}">
             <button>Back</button>

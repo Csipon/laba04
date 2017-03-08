@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: HOUSE
@@ -18,19 +19,18 @@
         <a href="/login">Go to login page</a>
         </br>
 
-        <c:if test="${not empty role}">
-            <c:choose>
-                <c:when test="${role eq 'ADMIN'}">
-                    <a href="/admin">My cabinet</a>
-                </c:when>
-                <c:when test="${role eq 'MANAGER'}">
-                    <a href="/profileMgr">My cabinet</a>
-                </c:when>
-                <c:when test="${role eq 'EMPLOYEE'}">
-                    <a href="/profileEmp">My cabinet</a>
-                </c:when>
-            </c:choose>
-        </c:if>
+        <sec:authorize access="hasRole('ROLE_Administrator')">
+            <a href="/admin/profileAdmin">My cabinet</a>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_ProjectManager')">
+            <a href="/manager/profileMgr">My cabinet</a>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_Employee')">
+            <a href="/employee/profileEmp">My cabinet</a>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_Customer')">
+            <a href="customer/profileCustomer">My cabinet</a>
+        </sec:authorize>
     </div>
 </body>
 </html>

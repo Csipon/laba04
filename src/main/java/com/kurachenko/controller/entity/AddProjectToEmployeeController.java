@@ -38,7 +38,7 @@ public class AddProjectToEmployeeController {
      *                free employees
      * @param model need for add as attribute object project
      * */
-    @RequestMapping(value = "/showEmpsFreeProject", method = RequestMethod.GET)
+    @RequestMapping(value = "admin/showEmpsFreeProject", method = RequestMethod.GET)
     public String showEmpsFreeProject(HttpServletRequest request, Integer idProject, Model model){
         try {
             List<Employee> list = employeeService.getAll();
@@ -68,8 +68,8 @@ public class AddProjectToEmployeeController {
      * @param model need for add as attribute object project
      * @param request need for get session and after from session get list employees
      * */
-    @RequestMapping(value = "/setEmpToProject", method = RequestMethod.GET)
-    public String setEmpToProject(HttpServletRequest request, Integer idEmployee, Integer idProject, Model model){
+    @RequestMapping(value = "/admin/setEmpToProject", method = RequestMethod.POST)
+    public void setEmpToProject(HttpServletRequest request, Integer idEmployee, Integer idProject, Model model){
         HttpSession session = request.getSession();
         try {
             Project project = projectService.getByPK(idProject);
@@ -83,7 +83,6 @@ public class AddProjectToEmployeeController {
             model.addAttribute("project", project);
             employeeService.update(employee);
             employeeService.commit();
-            return "redirect:/idProject?id=" + project.getId();
         }catch (PersistException | SQLException e) {
             try {
                 employeeService.rollback();
@@ -92,6 +91,5 @@ public class AddProjectToEmployeeController {
             }
             e.printStackTrace();
         }
-        return "404";
     }
 }

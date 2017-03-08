@@ -11,30 +11,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class MainController {
-    @RequestMapping(value = "/tologin", method = RequestMethod.GET)
-    public String login(){
-        return "/login";
-    }
 
     @RequestMapping(value = "/index")
     public String index(){
         return "../../index";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/profileAdmin", method = RequestMethod.GET)
     public String adminMain()  {
         return "admin/main";
     }
 
 
-    @RequestMapping(value = "/journal", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/journal", method = RequestMethod.GET)
     public String journal()  {
         return "manager/journal";
     }
 
-    @RequestMapping(value = "/profileMgr", method = RequestMethod.GET)
-    public String profile(){
-        return "manager/main";
-    }
+
 
 }

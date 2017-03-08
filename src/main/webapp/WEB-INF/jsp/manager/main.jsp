@@ -15,23 +15,23 @@
     <title>Profile</title>
 </head>
 <body>
-    <%--<c:if test="${role ne 'MANAGER' or empty role}">--%>
-        <%--<c:redirect url="/login"/>--%>
-    <%--</c:if>--%>
-    <sec:authorize access="hasRole('ROLE_ProjectManager')">
-        <p>HI I am manager</p>
-    </sec:authorize>
+    <sec:authentication var="user" property="principal" />
     <div class="container">
         <div align="right">
-            <h3>${user.name} ${user.surname}</h3>
-            <a href="/exit">Exit</a>
+            <form action="/logout" method="post">
+                <h3>${user.name} ${user.surname}</h3>
+                <input type="submit" value="Exit"/>
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+            </form>
         </div>
         <div align="center">
             <h2>Hi this is manager profile</h2>
         </div>
         <br/>
         <div class="toJournal" align="center">
-            <p><a href="/journal"><button>ADD employee</button></a> on task</p>
+            <p><a href="/manager/journal"><button>ADD employee</button></a> on task</p>
         </div>
         <br/>
         <br/>
@@ -41,7 +41,7 @@
         <c:if test="${user.projects ne null and not empty user.projects}">
             <p><b>Your projects : </b></p>
             <c:forEach items="${user.projects}" var="project">
-                <p><b><a href="/idProject?id=${project.id}">    ${project.name}</a></b></p>
+                <p><b><a href="/idProject?id=${project.id}">${project.name}</a></b></p>
             </c:forEach>
         </c:if>
 

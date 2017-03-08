@@ -13,12 +13,9 @@
     <title>Create sprint</title>
 </head>
 <body>
-    <c:if test="${role ne 'MANAGER' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div>
         <h1>Create sprint</h1>
-        <form action="/addSprint" method="post">
+        <form action="/manager/addSprint" method="post">
             <input type="hidden" name="idProject" value="${idProject}"/>
             <p>Name :            <input type="text" name="name"/></p>
             <td><p>Description : </p></td>
@@ -35,7 +32,7 @@
             <input type="reset" value="REST">
         </form>
         <br/>
-        <a href="/admin"><button>Back</button></a>
+        <a href="/idProject?id=${idProject}"><button>Back</button></a>
     </div>
 </body>
 </html>

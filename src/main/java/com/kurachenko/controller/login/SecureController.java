@@ -11,23 +11,19 @@ import org.springframework.web.servlet.ModelAndView;
  * @since 3/6/2017
  */
 @Controller
-public class SpringController {
+public class SecureController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView log(@RequestParam(value = "error", required = false) String error,
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error,
                               @RequestParam(value = "logout", required = false) String logout) {
-
         ModelAndView model = new ModelAndView();
         if (error != null) {
             model.addObject("error", "Invalid username and password!");
         }
-
         if (logout != null) {
             model.addObject("msg", "You've been logged out successfully.");
         }
         model.setViewName("login");
-
         return model;
-
     }
 }

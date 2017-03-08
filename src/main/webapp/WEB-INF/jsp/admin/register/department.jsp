@@ -13,12 +13,9 @@
     <title>Department</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div>
         <h1>Create department</h1>
-        <form action="/addDepartment" method="post">
+        <form action="/admin/addDepartment" method="post">
             <p>Name :           <input type="text" name="name"/></p>
             <p>Number :         <input type="number" name="number"/></p>
             <p>Description :    <input type="text" name="description"/></p>

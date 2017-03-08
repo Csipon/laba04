@@ -4,19 +4,13 @@
 <html>
 <head>
     <link href="<c:url value="../../../../resource/style.css" />" rel="stylesheet">
+    <script src="<c:url value="../../../../js/register.js"/>" type="text/javascript"></script>
     <title>Registration</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
-
-    <c:if test="${not empty error}">
-        <p class="error">${error}</p>
-    </c:if>
     <div>
         <h1>Registration</h1>
-        <form name="register" action="/addWorker" method="post">
+        <form name="register" action="/admin/addWorker" method="post">
             <p>Project manager :  <input type="checkbox" name="manager"/></p>
             <p>First name :  <input type="text" name="firstName"/></p>
             <p>Last name :   <input type="text" name="lastName"/></p>
@@ -45,49 +39,7 @@
             <input type="submit" id="submit" value="SUBMIT">
             <input type="reset" value="REST">
         </form>
-        <a href="/admin"><button>Back</button></a>
+        <a href="/admin/profileAdmin"><button>Back</button></a>
     </div>
-    <script>
-        var request;
-        var v;
-        function validLogin() {
-            v = document.register.login.value;
-            var url = "valid?login=" + v;
-
-            if (window.XMLHttpRequest) {
-                request = new XMLHttpRequest();
-            }
-            else if (window.ActiveXObject) {
-                request = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            try {
-                request.onreadystatechange = getInfo;
-                request.open("GET", url, true);
-                request.send();
-            }
-            catch (e) {
-                alert("Unable to connect to server");
-            }
-        }
-
-        function getInfo() {
-            if (request.readyState == 4) {
-                var val = request.responseText;
-                if(val == 'true' && v.length != 0) {
-                    document.getElementById('result').innerHTML = 'This login is available';
-                    document.getElementById('result').style.color = 'green';
-                    document.getElementById('submit').disabled = false;
-                }else if (v.length == 0){
-                    document.getElementById('result').innerHTML = '';
-                    document.getElementById('submit').disabled = true;
-                }else {
-                    document.getElementById('result').innerHTML = 'This login is not available';
-                    document.getElementById('result').style.color = 'red';
-                    document.getElementById('submit').disabled = true;
-                }
-            }
-        }
-    </script>
 </body>
 </html>

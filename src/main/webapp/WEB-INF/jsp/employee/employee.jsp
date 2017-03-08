@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: HOUSE
@@ -14,6 +15,7 @@
 </head>
 <body>
     <div class="employee">
+        <sec:authentication var="user" property="principal" />
         <p><b>Employee :</b> ${employee.id}</p>
         <p><b>First Name :</b> ${employee.name}</p>
         <p><b>Last Name :</b> ${employee.surname}</p>
@@ -36,33 +38,27 @@
             <p><b><a href="/idProject?id=${project.id}">    ${project.name}</a></b></p>
         </c:forEach>
 
-        <c:choose>
-            <c:when test="${role eq 'EMPLOYEE'}">
-                <button><a href="/profileEmp">Back</a></button>
-            </c:when>
-            <c:when test="${role eq 'MANAGER'}">
-                <button><a href="/profileMgr">Back</a></button>
-            </c:when>
-            <c:when test="${role eq 'ADMIN'}">
-                <button><a href="/getAllEmployee">Back</a></button>
-            </c:when>
-        </c:choose>
+        <sec:authorize access="hasRole('ROLE_Administrator')">
+            <a href="/admin/profileAdmin">
+                <button>Back</button>
+            </a>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_ProjectManager')">
+            <a href="/manager/profileMgr">
+                <button>Back</button>
+            </a>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_Employee')">
+            <a href="/employee/profileEmp">
+                <button>Back</button>
+            </a>
+        </sec:authorize>
     </div>
 
     <script type="text/javascript">
         var password = "${employee.password}";
         function encodePassword(){
-            var result = "";
-            for (var i = 0; i < password.length; i++) {
-                var temp = password.charCodeAt(i);
-                if (i % 2 == 0) {
-                    temp -= 25;
-                } else {
-                    temp -= 32;
-                }
-                result += String.fromCharCode(temp);
-            }
-            document.getElementById('password').innerHTML = result;
+            document.getElementById('password').innerHTML = password;
         }
 
         function hidePassword(){

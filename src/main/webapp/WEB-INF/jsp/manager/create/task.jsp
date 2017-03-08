@@ -13,12 +13,9 @@
     <title>Create task</title>
 </head>
 <body>
-    <c:if test="${role ne 'MANAGER' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div>
         <h1>Create task</h1>
-        <form action="/addTask" method="post">
+        <form action="/manager/addTask" method="post">
             <input type="hidden" name="idProject" value="${project}"/>
             <input type="hidden" name="idSprint" value="${sprint}">
             <p>Name :            <input type="text" name="name"/></p>
@@ -36,7 +33,7 @@
             <input type="reset" value="REST">
         </form>
         <br/>
-        <a href="/idSprint?id=${sprint}"><button>Cancel</button></a>
+        <a href="/idSprint?id=${sprint.id}"><button>Cancel</button></a>
     </div>
 </body>
 </html>

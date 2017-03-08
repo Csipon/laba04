@@ -14,39 +14,37 @@
     <title>Admin</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
-    <c:if test="${role eq 'ADMIN'}">
-        <div class="main" align="center">
-            <div align="right">
+    <sec:authentication var="user" property="principal" />
+    <div class="main" align="center">
+        <div align="right">
+            <form action="/logout" method="post">
                 <h3>${user.name} ${user.surname}</h3>
-                <a href="/exit">Exit</a>
-            </div>
-
-            <h1 align="center">Admin main page</h1>
-
-            <div class="container">
-                <div class="register" align="left">
-                    <p><a href="<c:url value="/registry"/>">Register employee</a></p>
-                    <p><a href="<c:url value="/registerCustomer"/>">Register customer</a></p>
-                    <p><a href="<c:url value="/createProject"/>">Create new project</a></p>
-                    <p><a href="<c:url value="/createDepartment"/>">Create new departemnt</a></p>
-                </div>
-
-                <div class="information" align="right">
-                    <p><a href="<c:url value="/getAllEmployee"/>">Employees</a></p>
-                    <p><a href="<c:url value="/getAllCustomer"/>">Customers</a></p>
-                    <p><a href="<c:url value="/getAllProject"/>">Projects</a></p>
-                    <p><a href="<c:url value="/getAllDepartment"/>">Departments</a></p>
-                    <p><a href="<c:url value="/getAllManager"/>">Managers</a></p>
-                </div>
-                <div style="clear:both;"></div>
-            </div>
-
+                <input type="submit" value="Exit"/>
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+            </form>
         </div>
-    </c:if>
 
+        <h1 align="center">Admin main page</h1>
 
+        <div class="container">
+            <div class="register" align="left">
+                <p><a href="<c:url value="/admin/registry"/>">Register employee</a></p>
+                <p><a href="<c:url value="/admin/registerCustomer"/>">Register customer</a></p>
+                <p><a href="<c:url value="/admin/createProject"/>">Create new project</a></p>
+                <p><a href="<c:url value="/admin/createDepartment"/>">Create new departemnt</a></p>
+            </div>
+
+            <div class="information" align="right">
+                <p><a href="<c:url value="/admin/getAllEmployee"/>">Employees</a></p>
+                <p><a href="<c:url value="/admin/getAllCustomer"/>">Customers</a></p>
+                <p><a href="<c:url value="/admin/getAllProject"/>">Projects</a></p>
+                <p><a href="<c:url value="/admin/getAllDepartment"/>">Departments</a></p>
+                <p><a href="<c:url value="/admin/getAllManager"/>">Managers</a></p>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
 </body>
 </html>

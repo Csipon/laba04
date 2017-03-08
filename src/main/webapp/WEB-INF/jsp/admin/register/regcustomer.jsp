@@ -13,12 +13,9 @@
     <title>Register customer</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div>
         <h1>Registration</h1>
-        <form action="/addCustomer" method="post">
+        <form action="/admin/addCustomer" method="post">
             <p>Name :  <input type="text" name="name"/></p>
             <p>Surname :   <input type="text" name="surname"/></p>
             <p>Login :       <input type="text" name="login"/></p>

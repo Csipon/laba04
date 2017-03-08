@@ -13,9 +13,6 @@
     <title>Managers</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div align="center">
         <table border="1">
             <tr>
@@ -38,16 +35,16 @@
                     <th>${manager.description}</th>
                     <th>${manager.hiredate}</th>
                     <th><c:forEach begin="1" step="1" end="${manager.password.length()}">*</c:forEach></th>
-                    <th><button><a href="/getManagerUpdate?id=${manager.id}">Update</a></button></th>
+                    <th><button><a href="/admin/getManagerUpdate?id=${manager.id}">Update</a></button></th>
                     <th>
-                        <a href="/deleteManager?id=${manager.id}&password=${manager.password}">
+                        <a href="/admin/deleteManager?id=${manager.id}&password=${manager.password}">
                             <img src="../../../../images/delete.png"></a>
                     </th>
                 </tr>
             </c:forEach>
         </table>
         <br/>
-        <a href="/admin">
+        <a href="/admin/profileAdmin">
             <button>Back</button>
         </a>
     </div>

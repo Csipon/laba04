@@ -46,7 +46,7 @@ public class SprintController {
      * @param idProject this id project for which need create sprint
      * @return if all good go to sprint.jsp else go to 403 error page
      * */
-    @RequestMapping(value = "/toCreateSprint", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/toCreateSprint", method = RequestMethod.GET)
     public String prepare(Model model, Integer idProject) {
         try {
             Sprint[] sprints = projectService.getByPK(idProject).getSprints();
@@ -67,7 +67,7 @@ public class SprintController {
      * @param idPreviousSprint this id previous sprint from which depend work on this sprint
      * @return if all good redirect on project on which we created new sprint, else go to error page 403
      * */
-    @RequestMapping(value = "addSprint", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager/addSprint", method = RequestMethod.POST)
     public String create(Sprint sprint, Integer idProject, Integer idPreviousSprint) {
         try {
             Sprint temp = service.create();
@@ -122,7 +122,7 @@ public class SprintController {
     /**
      * Servlet for delete sprint by id sprint and id project sprint
      * */
-    @RequestMapping(value = "deleteSprint", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/deleteSprint", method = RequestMethod.GET)
     public String deleteSprint(Integer idSprint, Integer idProject) {
         try {
             Sprint sprint = service.getByPK(idSprint);
@@ -150,7 +150,7 @@ public class SprintController {
     /**
      * Servlet for start sprint by id sprint
      * */
-    @RequestMapping(value = "startSprint", method = RequestMethod.GET)
+    @RequestMapping(value = "/startSprint", method = RequestMethod.GET)
     public String start(@RequestParam Integer idSprint) {
         try {
             Sprint sprint = service.getByPK(idSprint);

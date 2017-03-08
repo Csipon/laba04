@@ -36,7 +36,7 @@ public class ProjectController {
     /**
      * Servlet for prepare to create new project
      * */
-    @RequestMapping(value = "/createProject", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/createProject", method = RequestMethod.GET)
     public String newProject(Model model){
         try {
             model.addAttribute("customers", customerService.getAll());
@@ -50,7 +50,7 @@ public class ProjectController {
     /**
      * Servlet for get all projects
      * */
-    @RequestMapping(value = "/getAllProject", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/getAllProject", method = RequestMethod.GET)
     public String getAll(Model model){
         try {
             model.addAttribute("projectList", service.getAll());
@@ -67,7 +67,7 @@ public class ProjectController {
      * @param finishP this is Date in numeric format
      * @param idCustomer this is id customer which ordered project
      * */
-    @RequestMapping(value = "/addProject", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/addProject", method = RequestMethod.POST)
     public String addProject(Project project, Long finishP, Integer idCustomer)
     {
         try {
@@ -90,7 +90,7 @@ public class ProjectController {
             }
             e.getMessage();
         }
-        return "redirect:/getAllProject";
+        return "redirect:/admin/getAllProject";
     }
 
 
@@ -119,7 +119,7 @@ public class ProjectController {
      * @param confirm boolean variable which confirm delete project
      * @return if all successful redirect to all projects else redirect on page 403
      * */
-    @RequestMapping(value = "/deleteProject", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/deleteProject", method = RequestMethod.GET)
     public String delete(Integer id, Boolean confirm){
 
         try{
@@ -128,7 +128,7 @@ public class ProjectController {
                 if (confirm){
                     service.delete(project);
                     service.commit();
-                    return "redirect:/getAllProject";
+                    return "redirect:/admin/getAllProject";
                 }
             }
         }catch (PersistException | SQLException e){

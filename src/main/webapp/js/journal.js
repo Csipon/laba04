@@ -22,7 +22,7 @@ function loadJournals(paramName, id, idEmployee) {
 }
 
 function loadSprintJournals(paramName, id) {
-    var url = 'loadSprintJournals?paramName=' + paramName + '&id=' + id;
+    var url = '/manager/loadSprintJournals?paramName=' + paramName + '&id=' + id;
 
     initRequest();
     try {

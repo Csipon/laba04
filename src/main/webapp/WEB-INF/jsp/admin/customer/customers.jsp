@@ -13,9 +13,6 @@
     <title>Customers</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div align="center">
         <table border="1">
             <tr>
@@ -32,9 +29,9 @@
                     <th>${customer.surname}</th>
                     <th>${customer.companyName}</th>
                     <th>${customer.description}</th>
-                    <th><button><a href="/getCustomerUpdate?id=${customer.id}">Update</a></button></th>
+                    <th><button><a href="/admin/getCustomerUpdate?id=${customer.id}">Update</a></button></th>
                     <th>
-                        <a href="/deleteCustomer?id=${customer.id}&password=${customer.password}">
+                        <a href="/admin/deleteCustomer?id=${customer.id}&password=${customer.password}">
                             <img src="../../../../images/delete.png"></a>
                     </th>
                 </tr>

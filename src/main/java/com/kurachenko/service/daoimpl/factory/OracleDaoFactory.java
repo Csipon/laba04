@@ -27,9 +27,12 @@ public class OracleDaoFactory implements DaoFactory<Connection> {
     private static final String PASSWORD = "wsgf1996";
     private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
     private Map<Class, DaoCreator<Connection>> cacheService;
-    @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Bean(name = "dataSource")
     public DriverManagerDataSource dataSource() {

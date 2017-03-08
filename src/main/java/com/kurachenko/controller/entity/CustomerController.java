@@ -30,7 +30,7 @@ public class CustomerController {
      * Servlet which get id customer and load all customer projects after go on customer main page
      * @param request need for get customer id and current session
      * */
-    @RequestMapping(value = "/profileCustomer", method = RequestMethod.GET)
+    @RequestMapping(value = "customer/profileCustomer", method = RequestMethod.GET)
     public String profileCustomer(HttpServletRequest request){
         HttpSession session = request.getSession();
         Identified object = (Identified) session.getAttribute("user");
@@ -46,7 +46,7 @@ public class CustomerController {
     /**
      * Servlet for get all customer as list
      * */
-    @RequestMapping(value = "/getAllCustomer", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/getAllCustomer", method = RequestMethod.GET)
     public String getAll(Model model){
         try {
             model.addAttribute("customerList", service.getAll());
@@ -62,7 +62,7 @@ public class CustomerController {
      * @param customer filled customer from form
      * @param model need for set successful message
      * */
-    @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/addCustomer", method = RequestMethod.POST)
     public String addCustomer(Customer customer, Model model) {
         try {
             if (service.validLogin(customer.getLogin())) {

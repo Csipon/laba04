@@ -6,12 +6,9 @@
     <title>Update sprint</title>
 </head>
 <body>
-    <c:if test="${role ne 'MANAGER' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
     <div>
         <h1>Create sprint</h1>
-        <form action="/updateSprint" method="post">
+        <form action="/manager/updateSprint" method="post">
             <input type="hidden" name="id" value="${sprint.id}">
             <p>Name :                   <input type="text" name="name" value="${sprint.name}"/></p>
             <p>Description :            <input type="text" name="description" value="${sprint.description}"/></p>
@@ -42,7 +39,7 @@
                 <p><a href="">${task.name} </a> Qualification : ${task.levelQualification}</p>
             </c:forEach>
         </p>
-        <a href="/admin"><button>Back</button></a>
+        <a href="/idSprint?id=${sprint.id}"><button>Back</button></a>
     </div>
 </body>
 </html>

@@ -13,9 +13,7 @@
     <title>Employees</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
+
 <div align="center">
     <table border="1">
         <tr>
@@ -30,13 +28,14 @@
         <c:forEach items="${empList}" var="employee">
             <tr>
                 <th>${employee.id}</th>
-                <th><a href="/idEmp?id=${employee.id}">${employee.firstName}</a></th>
-                <th>${employee.lastName}</th>
+                <th><a href="/idEmp?id=${employee.id}">${employee.name}</a></th>
+                <th>${employee.surname}</th>
                 <th>${employee.login}</th>
                 <th>${employee.description}</th>
                 <th>${employee.hiredate}</th>
-                <th><c:forEach begin="1" step="1" end="${employee.password.length()}">*</c:forEach></th>
-                <th><button><a href="/getEmpUpdate?id=${employee.id}">Update</a></button></th>
+                <th><c:forEach begin="1" step="1" end="10">*</c:forEach></th>
+
+                <th><button><a href="/admin/getEmpUpdate?id=${employee.id}">Update</a></button></th>
                 <th>
                     <a href="/deleteEmployee?id=${employee.id}&password=${employee.password}">
                     <img src="../../../../images/delete.png"></a>
@@ -45,7 +44,7 @@
         </c:forEach>
     </table>
     <br/>
-    <a href="/admin">
+    <a href="/admin/profileAdmin">
         <button>Back</button>
     </a>
 </div>

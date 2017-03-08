@@ -13,12 +13,9 @@
     <title>Create new project</title>
 </head>
 <body>
-    <c:if test="${role ne 'ADMIN' or empty role}">
-        <c:redirect url="/login"/>
-    </c:if>
 <div>
     <h1>Creating</h1>
-    <form action="/addProject" method="post">
+    <form action="/admin/addProject" method="post">
         <p>Project name :           <input type="text" name="name"/></p>
         <p>Planed budget :          <input type="number" name="planedBudget"/></p>
         <p>Paid :                   <input type="number" name="paid"/></p>
@@ -39,7 +36,7 @@
         <input type="submit" onclick="displayDate()" value="SUBMIT">
         <input type="reset" value="REST">
     </form>
-    <a href="/admin"><button>Back</button></a>
+    <a href="/admin/profileAdmin"><button>Back</button></a>
 </div>
     <script>
         function setDate(){
