@@ -5,6 +5,7 @@ import com.kurachenko.entity.Employee;
 import com.kurachenko.entity.Message;
 import com.kurachenko.exception.PersistException;
 import com.kurachenko.service.daoimpl.MessageService;
+import com.kurachenko.service.daoimpl.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,13 +30,14 @@ public class MessageController {
 
     @Autowired
     private MessageService service;
-
+    @Autowired
+    private TaskService taskService;
 
     /**
      * servlet for send message
      * @param message this our filled entity
      * */
-    @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
+    @RequestMapping(value = "/maker/sendMessage", method = RequestMethod.POST)
     public void sendMessage(Message message, HttpServletResponse response){
         try {
             Message temp = service.create();
@@ -67,14 +69,15 @@ public class MessageController {
      * @param paramName this name param by which we will be getting result
      * @param id this id param
      * */
-    @RequestMapping(value = "/getMessage", method = RequestMethod.GET)
+    @RequestMapping(value = "/maker/getMessage", method = RequestMethod.GET)
     public void getMessage(String paramName, Integer id, HttpServletResponse response){
         try {
             Map<String, Map<String, String>> map = new TreeMap<>(comparator);
             for (Message msg : service.getListMessage(paramName, id)){
                 Employee employee = service.getSender(msg.getIdSender());
                 Map<String, String> info = new HashMap<>();
-                info.put(employee.getName() + " " + employee.getSurname(), msg.getText());
+                info.put(employee.getName() + " " + employee.getSurname() +
+                        ", task - " + taskService.getByPK(msg.getMessageTask()).getName(), msg.getText());
                 map.put(String.valueOf(msg.getSent().getTime()), info);
             }
             response.setCharacterEncoding("UTF-8");

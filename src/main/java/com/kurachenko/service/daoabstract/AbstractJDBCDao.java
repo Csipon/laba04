@@ -112,7 +112,6 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Integ
      */
     @Override
     public void update(T object) throws PersistException {
-        // Сохраняем зависимости
         String sql = StoreConstantForDB.UPDATE_OBJECT;
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             updateObject(statement, object);
@@ -228,11 +227,12 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Integ
         List<Task> list = new ArrayList<>();
         while (rs.next()) {
             String value = rs.getString("value");
-            Object param = parseStringParam(value, Task.class);
-            if (param == null){
-                continue;
+            if (value != null){
+                Object param = parseStringParam(value, Task.class);
+                if (param != null) {
+                    list.add((Task) param);
+                }
             }
-            list.add((Task) param);
         }
         return list;
     }
@@ -291,7 +291,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Integ
     public void updateParam(PreparedStatement statement, T object) throws IllegalAccessException, SQLException, PersistException {
         List<Field> fields = FieldHelper.removeFieldsRecursion(object.getClass(), false);
         for (Field field : fields) {
-            if (field.get(object) != null || field.getType() == Sprint.class) {
+            if (field.get(object) != null) {
                 if (field.getType().isArray()) {
                     deleteParam(object, field.getName());
                     insertArray((Identified[]) field.get(object), field.getName(), object.getId());
@@ -427,7 +427,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Integ
     }
 
     public Object parseStringParam(String value, Class type) throws PersistException, ParseException {
-        if (value.equals("null") || value.length() < 1) {
+        if ("null".equals(value) || null == value || value.length() < 1) {
             return null;
         }
         if (type == Date.class) {

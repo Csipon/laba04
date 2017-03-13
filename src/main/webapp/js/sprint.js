@@ -1,7 +1,7 @@
 function deleteSprint(idSprint, idProject) {
     console.log('In delete' + idSprint);
     if (confirm("Are you really want delete this sprint?")) {
-        document.location.href = '/deleteSprint?idSprint=' + idSprint + '&idProject=' + idProject;
+        document.location.href = '/manager/deleteSprint?idSprint=' + idSprint + '&idProject=' + idProject;
     }
 }
 
@@ -24,11 +24,12 @@ function setIdEmployee(id) {
 }
 
 function loadTask(sprint, id) {
-    var url = 'loadEmployeeTasks?idSprint=' + sprint + '&idEmployee=' + id;
+    var url = '/employee/loadEmployeeTasks?idSprint=' + sprint + '&idEmployee=' + id;
 
     init();
     try {
         setIdEmployee(id);
+        console.log('set is ok');
         request.onreadystatechange = getTasks;
         request.open("GET", url, true);
         request.send();
@@ -53,7 +54,7 @@ function parseOwnTask() {
         var j = journals[i];
         result += '<p>task - <a href="/idTask?id=' + j.task.id + '&idSprint=' + j.idSprint + '\">' + j.task.name + '</a>';
         if (j.mapEmployee['' + idEmployee] == false){
-            result +='<a href="/acceptTask?idJournal=' + j.id
+            result +='<a href="/employee/acceptTask?idJournal=' + j.id
                 + '&idEmployee=' + idEmployee + '\"><img src="../../../images/accept.png\"></a>';
         }
     }

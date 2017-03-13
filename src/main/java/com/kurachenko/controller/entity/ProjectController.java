@@ -1,11 +1,14 @@
 package com.kurachenko.controller.entity;
 
+import com.kurachenko.entity.Journal;
 import com.kurachenko.entity.Project;
+import com.kurachenko.entity.Sprint;
+import com.kurachenko.entity.Task;
 import com.kurachenko.exception.PersistException;
-import com.kurachenko.service.daoimpl.CustomerService;
-import com.kurachenko.service.daoimpl.ProjectManagerService;
-import com.kurachenko.service.daoimpl.ProjectService;
+import com.kurachenko.service.daoabstract.daohelpers.ManagerHelper;
+import com.kurachenko.service.daoimpl.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -31,7 +34,10 @@ public class ProjectController {
     private CustomerService customerService;
     @Autowired
     private ProjectManagerService managerService;
-
+    @Autowired
+    private JournalService journalService;
+    @Autowired
+    private TaskService taskService;
 
     /**
      * Servlet for prepare to create new project
@@ -97,15 +103,16 @@ public class ProjectController {
     /**
      * Servlet for get project by id
      * */
-    @RequestMapping(value = "/idProject", method = RequestMethod.GET)
-    public String information(@RequestParam Integer id, Model model, HttpServletRequest request){
+    @RequestMapping(value = "/maker/idProject", method = RequestMethod.GET)
+    public synchronized String information(@RequestParam Integer id, Model model, HttpServletRequest request){
 
         try{
             Project project = service.getByPK(id);
             model.addAttribute("project", project);
-            model.addAttribute("managers",managerService.getAll());
-            HttpSession session = request.getSession();
-            session.setAttribute("idProject", project.getId());
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_Administrator")) {
+                model.addAttribute("managers", ManagerHelper.checkBusyManager(managerService.getAll(), project.getId()));
+            }
+            request.getSession().setAttribute("idProject", project.getId());
         }catch (PersistException e){
             e.getMessage();
         }
@@ -117,20 +124,24 @@ public class ProjectController {
      * Servlet for delete project
      * @param id project id
      * @param confirm boolean variable which confirm delete project
-     * @return if all successful redirect to all projects else redirect on page 403
      * */
-    @RequestMapping(value = "/admin/deleteProject", method = RequestMethod.GET)
-    public String delete(Integer id, Boolean confirm){
-
+    @RequestMapping(value = "/admin/deleteProject", method = RequestMethod.POST)
+    public void delete(HttpServletResponse response, Integer id, Boolean confirm){
         try{
             Project project = service.getByPK(id);
-            if (project != null){
-                if (confirm){
-                    service.delete(project);
-                    service.commit();
-                    return "redirect:/admin/getAllProject";
+            if (project != null && confirm) {
+                for (Sprint sprint : project.getSprints()) {
+                    for (Journal j : journalService.getJournalsByNameParam("idSprint", sprint.getId())) {
+                        journalService.delete(j);
+                    }
+                    for (Task task : sprint.getTasks()) {
+                        taskService.delete(task);
+                    }
                 }
+                service.delete(project);
+                service.commit();
             }
+            response.setCharacterEncoding("UTF-8");
         }catch (PersistException | SQLException e){
             try {
                 service.rollback();
@@ -139,6 +150,5 @@ public class ProjectController {
             }
             e.getMessage();
         }
-        return "403";
     }
 }

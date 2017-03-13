@@ -43,9 +43,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             } else if (grantedAuthority.getAuthority().equals("ROLE_ProjectManager")) {
                 return "/manager/profileMgr";
             }else if (grantedAuthority.getAuthority().equals("ROLE_Customer")) {
-                return "customer/main";
+                return "customer/profileCustomer";
             }else if (grantedAuthority.getAuthority().equals("ROLE_Employee")) {
-                return "employee/main";
+                return "employee/profileEmp";
             }
         }
         throw new IllegalStateException();

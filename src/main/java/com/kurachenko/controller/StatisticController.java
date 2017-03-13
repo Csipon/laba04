@@ -29,7 +29,7 @@ public class StatisticController {
      * @param idProject this id project by which need make statistic
      * @return if all ok go to project page, else go to error page
      * */
-    @RequestMapping(value = "/loadStatistic", method = RequestMethod.GET)
+    @RequestMapping(value = "/customer/loadStatistic", method = RequestMethod.GET)
     public String loadStatistic(Integer idProject, Model model){
         try {
             Project project = projectService.getByPK(idProject);

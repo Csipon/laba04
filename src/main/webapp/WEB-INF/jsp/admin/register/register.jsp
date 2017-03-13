@@ -10,10 +10,10 @@
 <body>
     <div>
         <h1>Registration</h1>
-        <form name="register" action="/admin/addWorker" method="post">
+        <form name="register" action="/admin/addWorker" method="POST">
             <p>Project manager :  <input type="checkbox" name="manager"/></p>
-            <p>First name :  <input type="text" name="firstName"/></p>
-            <p>Last name :   <input type="text" name="lastName"/></p>
+            <p>First name :  <input type="text" name="name"/></p>
+            <p>Last name :   <input type="text" name="surname"/></p>
             <p>Login :       <input type="text" name="login" onkeyup="validLogin()"/><span id="result"></span></p>
             <p>Password :    <input type="text" name="password"/></p>
             Department :
@@ -35,6 +35,10 @@
             <td><textarea type="text" name="description" placeholder="Set here description..." rows="5" cols="45"></textarea></td>
             <br/>
             <br/>
+
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
 
             <input type="submit" id="submit" value="SUBMIT">
             <input type="reset" value="REST">

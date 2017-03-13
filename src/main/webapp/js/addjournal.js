@@ -91,7 +91,6 @@ function selectTask() {
 
 function loadEmployees() {
     var url = '/manager/loadEmployees';
-
     init();
 
     request.onreadystatechange = viewEmployees;
@@ -145,15 +144,14 @@ function saveAdded() {
     var list = JSON.stringify(empList);
     var desc = document.getElementById('description').value;
     var url = '/manager/addJournal?idSprint=' + idSprint + '&idTask=' + idTask + '&description=' + desc + '&list=' + list;
-    console.log(list);
     init();
     request.onreadystatechange = successfulAdd;
-    request.open("GET", url, true);
+    request.open("POST", url, true);
     request.send();
 }
 
 function successfulAdd() {
-    if (request.readyState == 4 ) {
+    if (request.readyState == 4 && this.status == 200) {
         location.href = '/manager/profileMgr';
     }
 }

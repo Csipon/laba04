@@ -1,15 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: HOUSE
-  Date: 1/13/2017
-  Time: 12:30 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="th" uri="http://jakarta.apache.org/taglibs/standard/permittedTaglibs" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <link href="<c:url value="../../../../resource/menu.css" />" rel="stylesheet">
+    <script src="<c:url value="../../../../js/employee.js"/>" type="text/javascript"></script>
     <title>Employees</title>
 </head>
 <body>
@@ -28,17 +23,17 @@
         <c:forEach items="${empList}" var="employee">
             <tr>
                 <th>${employee.id}</th>
-                <th><a href="/idEmp?id=${employee.id}">${employee.name}</a></th>
+                <th><a href="/maker/idEmp?id=${employee.id}">${employee.name}</a></th>
                 <th>${employee.surname}</th>
                 <th>${employee.login}</th>
                 <th>${employee.description}</th>
                 <th>${employee.hiredate}</th>
                 <th><c:forEach begin="1" step="1" end="10">*</c:forEach></th>
 
-                <th><button><a href="/admin/getEmpUpdate?id=${employee.id}">Update</a></button></th>
+                <th><a href="/admin/getEmpUpdate?id=${employee.id}">Update</a></th>
                 <th>
-                    <a href="/deleteEmployee?id=${employee.id}&password=${employee.password}">
-                    <img src="../../../../images/delete.png"></a>
+                    <a href="#" onclick="deleteEmployee('${employee.id}', '${employee.password}')">
+                        <img src="../../../../images/delete.png"></a>
                 </th>
             </tr>
         </c:forEach>

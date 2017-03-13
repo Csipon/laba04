@@ -25,7 +25,7 @@
             <br/>
             <input type="submit" value="SAVE">
         </form>
-        <a href="/admin"><button>Back</button></a>
+        <a href="/admin/profileAdmin"><button>Back</button></a>
     </div>
 </body>
 </html>

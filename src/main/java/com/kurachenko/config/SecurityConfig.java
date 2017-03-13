@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manager/**").access("hasRole('ROLE_ProjectManager')")
                 .antMatchers("/employee/**").access("hasRole('ROLE_Employee')")
                 .antMatchers("/customer/**").access("hasRole('ROLE_Customer')")
+                .antMatchers("/maker/**").access("hasRole('ROLE_ProjectManager') OR hasRole('ROLE_Employee') OR hasRole('ROLE_Administrator')")
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -52,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()
-                .csrf();
+                .csrf().disable();
     }
 
 

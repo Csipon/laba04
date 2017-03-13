@@ -20,7 +20,6 @@
         <p>Planed budget :          <input type="number" name="planedBudget"/></p>
         <p>Paid :                   <input type="number" name="paid"/></p>
         <p>Additional payments :    <input type="number" name="additionalPayments"/></p>
-        <p>Description :            <input type="text" name="description"/></p>
         <p>Finish project :         <input id="date" type="date" /></p>
         Customer :
         <select name="idCustomer">
@@ -28,13 +27,15 @@
                 <option value="${customer.id}">${customer.name}</option>
             </c:forEach>
         </select>
-
+        <td><p>Description : </p></td>
+        <td><textarea type="text" name="description" placeholder="Set here description..." rows="5" cols="45"></textarea></td>
         <input id="time" type="hidden" name="finishP" />
         <br/>
         <br/>
 
         <input type="submit" onclick="displayDate()" value="SUBMIT">
         <input type="reset" value="REST">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
     <a href="/admin/profileAdmin"><button>Back</button></a>
 </div>

@@ -28,19 +28,16 @@
         <h2 align="center">Hi, this is customer profile</h2>
         <div class="customer">
             <c:forEach items="${projects}" var="project">
-                <p>project name : ${project.name}</p>
-                <p>budget : ${project.planedBudget}</p>
-                <p>paid : ${project.paid}</p>
-                <p>additional payments : ${project.additionalPayments}</p>
-                <p>date start : ${project.start}</p>
-                <p>date finish : ${project.finish}</p>
+                <p><b>project name : </b>${project.name}</p>
+                <p><b>budget : </b>${project.planedBudget}</p>
+                <p><b>paid : </b>${project.paid}</p>
+                <p><b>additional payments : </b>${project.additionalPayments}</p>
+                <p><b>date start : </b>${project.start}</p>
+                <p><b>date finish : </b>${project.finish}</p>
                 <p>condition project : <a href="/idProject?id=${project.id}"><button>show details</button></a></p>
                 <p id="condition"></p>
             </c:forEach>
         </div>
     </div>
-    <script type="text/javascript">
-
-    </script>
 </body>
 </html>

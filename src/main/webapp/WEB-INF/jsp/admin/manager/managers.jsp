@@ -10,6 +10,7 @@
 <html>
 <head>
     <link href="<c:url value="../../../../resource/menu.css" />" rel="stylesheet">
+    <script src="<c:url value="../../../../js/manager.js"/>" type="text/javascript"></script>
     <title>Managers</title>
 </head>
 <body>
@@ -29,16 +30,17 @@
             <c:forEach items="${managerList}" var="manager">
                 <tr>
                     <th>${manager.id}</th>
-                    <th><a href="/idManager?id=${manager.id}">${manager.firstName}</a></th>
-                    <th>${manager.lastName}</th>
+                    <th><a href="/maker/idManager?id=${manager.id}">${manager.name}</a></th>
+                    <th>${manager.surname}</th>
                     <th>${manager.login}</th>
                     <th>${manager.description}</th>
                     <th>${manager.hiredate}</th>
                     <th><c:forEach begin="1" step="1" end="${manager.password.length()}">*</c:forEach></th>
                     <th><button><a href="/admin/getManagerUpdate?id=${manager.id}">Update</a></button></th>
                     <th>
-                        <a href="/admin/deleteManager?id=${manager.id}&password=${manager.password}">
-                            <img src="../../../../images/delete.png"></a>
+                        <a href="#" onclick="deleteManager('${manager.id}' , '${manager.password}')">
+                            <img src="../../../../images/delete.png">
+                        </a>
                     </th>
                 </tr>
             </c:forEach>

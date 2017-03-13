@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 /**
@@ -32,7 +33,7 @@ public class ManagerController {
     /**
      * Servlet for get manager by id
      * */
-    @RequestMapping(value = "/idManager", method = RequestMethod.GET)
+    @RequestMapping(value = "/maker/idManager", method = RequestMethod.GET)
     public String information(@RequestParam Integer id, Model model){
         try{
             model.addAttribute("manager", service.getByPK(id));
@@ -48,18 +49,17 @@ public class ManagerController {
      * @param id identified manager
      * @param password password manager, need for confirm
      * */
-    @RequestMapping(value = "/admin/deleteManager", method = RequestMethod.GET)
-    public String delete(@RequestParam Integer id, @RequestParam String password){
-
+    @RequestMapping(value = "/admin/deleteManager", method = RequestMethod.POST)
+    public void delete(HttpServletResponse response, @RequestParam Integer id, @RequestParam String password){
         try{
             ProjectManager manager = service.getByPK(id);
             if (manager != null){
                 if (manager.getPassword().equals(password)){
                     service.delete(manager);
                     service.commit();
-                    return "redirect:/getAllManager";
                 }
             }
+            response.setCharacterEncoding("UTF-8");
         }catch (PersistException | SQLException e){
             try {
                 service.rollback();
@@ -68,6 +68,5 @@ public class ManagerController {
             }
             e.getMessage();
         }
-        return "404";
     }
 }

@@ -12,7 +12,7 @@ var manager;
 
 function loadFreeEmployees(idManager) {
     manager = idManager;
-    var url = 'loadFreeEmps?idManager=' + idManager;
+    var url = '/admin/loadFreeEmps?idManager=' + idManager;
     initRequest();
 
     request.onreadystatechange = viewFreeEmployees;
@@ -52,16 +52,35 @@ function addEmpInArray(id) {
 }
 
 function addSubordinate(idEmployee) {
-    var url = 'addSubordinateToManager?idEmployee=' + idEmployee + '&idManager=' + manager;
+    var url = '/admin/addSubordinateToManager?idEmployee=' + idEmployee + '&idManager=' + manager;
     initRequest();
 
     request.onreadystatechange = successfulAddEmployee;
-    request.open("GET", url, true);
+    request.open("POST", url, true);
     request.send();
 }
 
 function successfulAddEmployee() {
     if (request.readyState == 4){
         document.getElementById('successfulAdd').innerHTML = request.responseText;
+    }
+}
+
+
+
+//  DELETE MANAGER
+
+function deleteManager(idManager, password) {
+    var url = '/admin/deleteManager?id=' + idManager + '&password=' + password;
+    initRequest();
+
+    request.onreadystatechange = updateAfterDelete;
+    request.open("POST", url, true);
+    request.send();
+}
+
+function updateAfterDelete() {
+    if (request.readyState == 4 && this.status == 200){
+        location.reload();
     }
 }

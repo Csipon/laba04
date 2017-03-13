@@ -9,7 +9,7 @@ function initRequest() {
 }
 
 function loadMessage(paramName, id) {
-    var url = 'getMessage?paramName=' + paramName + '&id=' + id;
+    var url = '/maker/getMessage?paramName=' + paramName + '&id=' + id;
     try {
         initRequest();
         request.onreadystatechange = getInformation;

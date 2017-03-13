@@ -80,18 +80,17 @@ public class EmployeeController {
      * @param id id employee which need delete
      * @param password password employee for check
      * */
-    @RequestMapping(value = "/admin/deleteEmployee", method = RequestMethod.GET)
-    public String delete(@RequestParam Integer id, @RequestParam String password){
-
+    @RequestMapping(value = "/admin/deleteEmployee", method = RequestMethod.POST)
+    public void delete(HttpServletResponse response, Integer id, String password){
         try{
             Employee employee = service.getByPK(id);
             if (employee != null){
                 if (employee.getPassword().equals(password)){
                     service.delete(employee);
                     service.commit();
-                    return "redirect:/getAllEmployee";
                 }
             }
+            response.setCharacterEncoding("UTF-8");
         }catch (PersistException | SQLException e){
             try {
                 service.rollback();
@@ -100,7 +99,6 @@ public class EmployeeController {
             }
             e.getMessage();
         }
-        return "404";
     }
 
 
@@ -110,7 +108,7 @@ public class EmployeeController {
      * @param idJournal journal with current task and need for write that this employee accept task
      * @param model need for set successful text
      * */
-    @RequestMapping(value = "/acceptTask", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/acceptTask", method = RequestMethod.GET)
     public String acceptTask(@RequestParam Integer idJournal, Integer idEmployee, Model model){
 
         try{
@@ -140,7 +138,7 @@ public class EmployeeController {
      * @param idJournal journal in which store makers
      * @param response need for write in JSON format response
      * */
-    @RequestMapping(value = "/showMakers", method = RequestMethod.GET)
+    @RequestMapping(value = "/maker/showMakers", method = RequestMethod.GET)
     public void showMakers(Integer idJournal, HttpServletResponse response) {
         try {
             Journal journal = journalService.getByPK(idJournal);

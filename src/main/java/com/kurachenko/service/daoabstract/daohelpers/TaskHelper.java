@@ -25,13 +25,15 @@ public abstract class TaskHelper {
     }
 
     public static boolean startTask(Task task) throws PersistException {
-        for (Task t : task.getTasks()) {
-            if (t.getTasks() != null) {
-                startTask(t);
-            } else {
-                if (!t.isCompleted()) {
-                    return false;
+        if (task.getTasks() != null && task.getTasks().length != 0) {
+            if (task.getTasks().length > 1) {
+                for (Task t : task.getTasks()){
+                    if (!startTask(t)) {
+                        return false;
+                    }
                 }
+            } else {
+                return task.getTasks()[0].isCompleted();
             }
         }
         return true;

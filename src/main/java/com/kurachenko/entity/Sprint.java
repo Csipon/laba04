@@ -79,7 +79,7 @@ public class Sprint implements Identified<Integer>, Serializable {
         this.name = name;
     }
 
-    public Boolean getFinished() {
+    public Boolean isFinished() {
         return finished;
     }
 
@@ -87,7 +87,7 @@ public class Sprint implements Identified<Integer>, Serializable {
         this.finished = finished;
     }
 
-    public Boolean getStarted() {
+    public Boolean isStarted() {
         return started;
     }
 

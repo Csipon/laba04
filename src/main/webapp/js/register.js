@@ -2,7 +2,7 @@ var request;
 var v;
 function validLogin() {
     v = document.register.login.value;
-    var url = "admin/valid?login=" + v;
+    var url = "/admin/valid?login=" + v;
 
     if (window.XMLHttpRequest) {
         request = new XMLHttpRequest();

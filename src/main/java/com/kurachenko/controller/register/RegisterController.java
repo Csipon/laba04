@@ -8,6 +8,7 @@ import com.kurachenko.service.daoimpl.EmployeeService;
 import com.kurachenko.service.daoimpl.ProjectManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,6 @@ import java.util.Date;
  * @since 1/14/2017
  */
 @Controller
-@RequestMapping(value = "/admin")
 public class RegisterController {
     @Autowired
     private DepartmentService deptService;
@@ -31,26 +31,25 @@ public class RegisterController {
     @Autowired
     private ProjectManagerService managerService;
 
-    @RequestMapping(value = "/registerCustomer", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/registerCustomer", method = RequestMethod.GET)
     public String regCustomer(){
         return "admin/register/regcustomer";
     }
 
 
-    @RequestMapping(value = "/registry", method = RequestMethod.GET)
-    public String getAll(HttpServletRequest request){
+    @RequestMapping(value = "/admin/registry", method = RequestMethod.GET)
+    public String getAll(Model model){
         try {
-            HttpSession session = request.getSession();
-            session.setAttribute("departments", deptService.getAll());
-            session.setAttribute("quality", Qualification.values());
+            model.addAttribute("departments", deptService.getAll());
+            model.addAttribute("quality", Qualification.values());
         }catch (PersistException e) {
             e.printStackTrace();
         }
         return "admin/register/register";
     }
 
-    @RequestMapping(value = "/addWorker", method = RequestMethod.POST)
-    public String addEmployee(Employee emp, @RequestParam Integer idDept, Boolean manager
+    @RequestMapping(value = "/admin/addWorker", method = RequestMethod.POST)
+    public String addEmployee(String name, String surname, String description, String password, String login, @RequestParam Integer idDept, Boolean manager
             , String qualification, HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
@@ -61,21 +60,19 @@ public class RegisterController {
             } else {
                 employee = empService.create();
             }
-            employee.setFirstName(emp.getName());
-            employee.setLastName(emp.getSurname());
-            employee.setDescription(emp.getDescription());
-            employee.setPassword(emp.getPassword());
-            employee.setLogin(emp.getLogin());
+            employee.setFirstName(name);
+            employee.setLastName(surname);
+            employee.setDescription(description);
+            employee.setPassword(password);
+            employee.setLogin(login);
             employee.setHiredate(new Date());
             employee.setLevelQualification(Qualification.valueOf(qualification));
             if (idDept != null) {
                 employee.setDepartment(deptService.getByPK(idDept));
             }
             empService.update(employee);
-            session.removeAttribute("departments");
-            session.removeAttribute("quality");
             managerService.commit();
-            return "redirect:/admin";
+            return "redirect:/admin/profileAdmin";
         }catch (PersistException | SQLException e){
             try {
                 managerService.rollback();

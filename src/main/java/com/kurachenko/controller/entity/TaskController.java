@@ -1,5 +1,6 @@
 package com.kurachenko.controller.entity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kurachenko.entity.Journal;
 import com.kurachenko.entity.Sprint;
 import com.kurachenko.entity.Task;
@@ -16,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller which handle all request which bound with task
@@ -33,14 +38,18 @@ public class TaskController {
     @Autowired
     private JournalService journalService;
 
+    /**
+     * Mapper for convert object in JSON format
+     * */
+    private ObjectMapper mapper = new ObjectMapper();
+
 
     /**
      * Servlet for prepare to create task
      * */
-    @RequestMapping(value = "/toCreateTask", method = RequestMethod.GET)
-    public String prepare(Model model, Integer idSprint, Integer idProject) {
+    @RequestMapping(value = "/manager/toCreateTask", method = RequestMethod.GET)
+    public String prepare(Model model, Integer idSprint) {
         model.addAttribute("sprint", idSprint);
-        model.addAttribute("project", idProject);
         model.addAttribute("qualifications", Qualification.values());
         return "manager/create/task";
     }
@@ -48,27 +57,34 @@ public class TaskController {
 
     /**
      * Servlet for add new task in sprint
-     * @param task this entity which we filled in form
      * @param idSprint this id sprint in which need add new task
-     * @param idProject this id project in which has sprint in which we added new task
-     *                  need for redirect after created and update
      * @param qualification this is level qualification for task
      * */
     @RequestMapping(value = "/manager/addTask", method = RequestMethod.POST)
-    public String create(Task task, Integer idSprint, Integer idProject, String qualification) {
+    public void create(HttpServletResponse response, String name, String description, Integer estimate, Integer idSprint
+            , String qualification, String tasks) {
         try {
             Task temp = service.create();
-            temp.setName(task.getName());
-            temp.setDescription(task.getDescription());
+            temp.setName(name);
+            temp.setDescription(description);
             temp.setLevelQualification(Qualification.valueOf(qualification));
-            temp.setEstimate(task.getEstimate());
+            temp.setEstimate(estimate);
+            System.out.println(tasks);
+            if (tasks != null && tasks.length() > 0) {
+                List<Task> taskList = new ArrayList<>();
+                for (Integer id : mapper.readValue(tasks, Integer[].class)){
+                    taskList.add(service.getByPK(id));
+                }
+                temp.setTasks(taskList.toArray(new Task[taskList.size()]));
+            }
             service.update(temp);
             Sprint sprint = sprintService.getByPK(idSprint);
             TaskHelper.setTaskInSprint(sprint, temp);
             sprintService.update(sprint);
+            sprintService.commit();
             service.commit();
-            return "redirect:/idSprint?id=" + idSprint + "&idProject=" + idProject;
-        } catch (PersistException | SQLException e) {
+            response.setCharacterEncoding("UTF-8");
+        } catch (PersistException | SQLException | IOException e) {
             try {
                 service.rollback();
             } catch (SQLException e1) {
@@ -76,7 +92,6 @@ public class TaskController {
             }
             e.printStackTrace();
         }
-        return "403";
     }
 
 
@@ -85,13 +100,15 @@ public class TaskController {
      * @param id this id task
      * @param idSprint this id sprint which have this task
      **/
-    @RequestMapping(value = "/idTask", method = RequestMethod.GET)
+    @RequestMapping(value = "/maker/idTask", method = RequestMethod.GET)
     public String getByID(@RequestParam Integer id, Integer idSprint, Model model) {
         try {
             Task task = service.getByPK(id);
+            Sprint sprint = sprintService.getByPK(idSprint);
             model.addAttribute("task", task);
             model.addAttribute("start", TaskHelper.startTask(task));
-            model.addAttribute("idSprint", idSprint);
+            model.addAttribute("idSprint", sprint.getId());
+            model.addAttribute("sprintStarted", sprint.isStarted());
             return "task/task";
         } catch (PersistException e) {
             e.printStackTrace();
@@ -104,7 +121,7 @@ public class TaskController {
     /**
      * Servlet for start task
      * */
-    @RequestMapping(value = "/startTask", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/startTask", method = RequestMethod.GET)
     public String start(@RequestParam Integer idTask, Integer idSprint) {
         try {
             Task task = service.getByPK(idTask);
@@ -128,7 +145,7 @@ public class TaskController {
     /**
      * Servlet for finish task
      * */
-    @RequestMapping(value = "/finishTask", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/finishTask", method = RequestMethod.GET)
     public String finish(@RequestParam Integer idTask, Integer idSprint) {
         try {
             Task task = service.getByPK(idTask);
@@ -155,7 +172,7 @@ public class TaskController {
      * @param idSprint this id sprint which have task which need delete
      * @param idProject need for redirect in need sprint after delete task
      * */
-    @RequestMapping(value = "/deleteTask", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/deleteTask", method = RequestMethod.GET)
     public String deleteTask(Integer idTask, Integer idSprint, Integer idProject) {
         try {
             for (Journal j : journalService.getJournalsByNameParam("task", idTask)) {

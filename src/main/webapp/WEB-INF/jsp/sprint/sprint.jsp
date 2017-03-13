@@ -17,69 +17,65 @@
     <title>Sprint</title>
 </head>
 <body>
-    <div class="sprintC" align="center">
+<sec:authentication var="user" property="principal" />
+    <div class="sprintC">
         <div class="sprint" align="left">
             <div class="sprintDetails">
                 <p><b>Sprint :                </b> ${sprint.id}</p>
                 <p><b>Name :                  </b> ${sprint.name}</p>
                 <p><b>Date created :          </b> ${sprint.created}</p>
-                <p>
-                    <b>Previous sprint :</b>
-                    <c:choose>
-                        <c:when test="${sprint.previousSprint ne null}">
-                            <a href="/idSprint?id=${sprint.previousSprint.id}">${sprint.previousSprint.name}</a>
-                        </c:when>
-                        <c:otherwise>
-                            <p>This sprint without previous sprint</p>
-                        </c:otherwise>
-                    </c:choose>
-                </p>
+                <p><b>Previous sprint :</b></p>
+                <c:choose>
+                    <c:when test="${sprint.previousSprint ne null}">
+                        <a href="/idSprint?id=${sprint.previousSprint.id}">${sprint.previousSprint.name}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <p>This sprint without previous sprint</p>
+                    </c:otherwise>
+                </c:choose>
                 <p><b>Description :           </b> ${sprint.description}</p>
-                <p>
-                    <b>Condition sprint :</b>
-                    <c:choose>
-                        <c:when test="${(sprint.previousSprint.finished or sprint.previousSprint eq null) and !sprint.started and !sprint.finished and role eq 'MANAGER'}">
-                            <p>This sprint may be started</p>
-                            <a href="/startSprint?idSprint=${sprint.id}"><button>Start sprint</button></a>
-                        </c:when>
-                        <c:when test="${(sprint.previousSprint.finished or sprint.previousSprint eq null) and !sprint.started and !sprint.finished and role ne 'MANAGER'}">
-                            <p>This sprint may be started</p>
-                        </c:when>
-                        <c:when test="${sprint.previousSprint.finished}">
-                            <p>This sprint not may be started, because previous sprint
-                                is not finished <a href="/idSprint?id=${sprint.previousSprint.id}">${sprint.previousSprint.name}</a></p>
-                        </c:when>
-                        <c:when test="${(sprint.previousSprint.finished or sprint.previousSprint eq null) and sprint.started}">
-                            <p>This sprint is started, make task that start next sprint :))</p>
-                        </c:when>
-                        <c:when test="${sprint.previousSprint.finished and sprint.finished}">
-                            <p>This sprint is finished, go to next sprint :))</p>
-                        </c:when>
-                        <c:otherwise>
-                            <p>With your sprint something problem</p>
-                        </c:otherwise>
-
-                    </c:choose>
-                </p>
+                <p><b>Condition sprint :</b></p>
+                <c:choose>
+                    <c:when test="${finish and sprint.isStarted() and sprint.previousSprint.isFinished()}">
+                        <p>Finish this sprint <a href="/manager/finishSprint?idSprint=${sprint.id}"><button>Finish</button></a></p>
+                    </c:when>
+                    <c:when test="${(sprint.previousSprint eq null or sprint.previousSprint.isFinished()) and !sprint.isStarted()}">
+                        <p>This sprint may be started</p>
+                        <sec:authorize access="hasRole('ROLE_ProjectManager')">
+                            <a href="/manager/startSprint?idSprint=${sprint.id}"><button>Start sprint</button></a>
+                        </sec:authorize>
+                    </c:when>
+                    <c:when test="${sprint.previousSprint ne null and !sprint.previousSprint.isFinished()}">
+                        <p>This sprint not may be started, because previous sprint
+                            is not finished <a href="/maker/idSprint?id=${sprint.previousSprint.id}">${sprint.previousSprint.name}</a></p>
+                    </c:when>
+                    <c:when test="${(sprint.previousSprint eq null or sprint.previousSprint.isFinished()) and sprint.isStarted()}">
+                        <p>This sprint is started, make tasks that start next sprint :))</p>
+                    </c:when>
+                    <c:when test="${sprint.previousSprint.isFinished() and sprint.isFinished()}">
+                        <p>This sprint is finished, go to next sprint :))</p>
+                    </c:when>
+                    <c:otherwise>
+                        <p>With your sprint something problem</p>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <br/>
+            <a href="/maker/idProject?id=${idProject}">
+                <button>Back</button>
+            </a>
             <sec:authorize access="hasRole('ROLE_ProjectManager')">
-                <a href="/toCreateTask?idSprint=${sprint.id}&idProject=${idProject}"><button>Add task</button></a>
+                <a href="/manager/toCreateTask?idSprint=${sprint.id}"><button>Add task</button></a>
                 <button onclick="deleteSprint('${sprint.id}', '${idProject}')">Delete</button>
                 <div class="inform">
-                    <div class="tasks" align="center">
-                    <h1>Tasks</h1>
-                    <c:forEach items="${sprint.tasks}" var="task">
-                        <div class="task">
-                            <h3>${task.name}</h3>
-                            <p>${task.description}</p>
-                            <a href="/idTask?id=${task.id}&idSprint=${sprint.id}">Go to task</a>
-                        </div>
-                    </c:forEach>
-                </div>
-                    <div class="messages">
-                        <button class="loadMessage" onclick="loadMessage('messageSprint', '${sprint.id}')">Load message</button>
-                        <span id="taskMessages"></span>
+                    <div class="tasks">
+                        <c:forEach items="${sprint.tasks}" var="task">
+                            <div class="task">
+                                <h3>${task.name}</h3>
+                                <p>${task.description}</p>
+                                <a href="/maker/idTask?id=${task.id}&idSprint=${sprint.id}">Go to task</a>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
                 <br/>
@@ -89,18 +85,19 @@
                 <span id="myTask"></span>
             </sec:authorize>
         </div>
-
-
         <sec:authorize access="hasRole('ROLE_ProjectManager')">
-            <div class="journals">
+            <div class="journals" align="left">
                 <button onclick="loadSprintJournals('idSprint', '${sprint.id}')">load journals</button>
                 <span id="fieldJournal"></span>
-                <span id="fieldMakers"></span>
+                <div class="makers">
+                    <span id="fieldMakers"></span>
+                </div>
+                <div class="messages" align="left">
+                    <button class="loadMessage" onclick="loadMessage('messageSprint', '${sprint.id}')">Load message</button>
+                    <span id="taskMessages"></span>
+                </div>
             </div>
         </sec:authorize>
-        <a href="/idProject?id=${idProject}">
-            <button>Back</button>
-        </a>
     </div>
 </body>
 </html>

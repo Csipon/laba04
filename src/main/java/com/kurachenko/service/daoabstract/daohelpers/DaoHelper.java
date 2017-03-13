@@ -38,24 +38,6 @@ public abstract class DaoHelper extends AbstractJDBCDao {
         checkOneUpdate(statement.executeUpdate());
     }
 
-//    public static void setParam(ResultSet rs, Object object) throws PersistException {
-//        try {
-//            Map<String, Class> mapType = FieldHelper.getMapFieldsType(object.getClass(), true);
-//            while (rs.next()) {
-//                String fieldName = rs.getString("name");
-//                String value = rs.getString("value");
-//                if (mapType.get(fieldName) == null){
-//                    continue;
-//                }
-//                Object param = parseStringParam(value, mapType.get(fieldName));
-//                object.getClass().getMethod(FormatHelper.getNameMethod(fieldName), mapType.get(fieldName))
-//                        .invoke(object, param);
-//            }
-//        } catch (Exception e) {
-//            throw new PersistException("setParam",e);
-//        }
-//    }
-
     public static void insertParam(PreparedStatement statement, Object object, Field field) throws SQLException, IllegalAccessException, PersistException {
         statement.setString(1, field.getName());
         statement.setString(2, FormatHelper.paramToString(object, field));

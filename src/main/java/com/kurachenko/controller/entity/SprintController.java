@@ -5,6 +5,7 @@ import com.kurachenko.entity.Project;
 import com.kurachenko.entity.Sprint;
 import com.kurachenko.entity.Task;
 import com.kurachenko.exception.PersistException;
+import com.kurachenko.service.daoabstract.daohelpers.SprintHelper;
 import com.kurachenko.service.daoimpl.JournalService;
 import com.kurachenko.service.daoimpl.ProjectService;
 import com.kurachenko.service.daoimpl.SprintService;
@@ -17,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Controller which handle all request which bound with sprint
@@ -79,7 +76,7 @@ public class SprintController {
             }
             service.update(temp);
             Project project = projectService.getByPK(idProject);
-            setSprintInProject(project, temp);
+            SprintHelper.setSprintInProject(project, temp);
             projectService.update(project);
             service.commit();
             return "redirect:/idProject?id=" + idProject;
@@ -98,18 +95,12 @@ public class SprintController {
     /**
      * Servlet for get sprint by id
      * */
-    @RequestMapping(value = "/idSprint", method = RequestMethod.GET)
+    @RequestMapping(value = "/maker/idSprint", method = RequestMethod.GET)
     public String getByID(@RequestParam  Integer id, Model model, HttpServletRequest request) {
         try {
             Sprint sprint = service.getByPK(id);
-            HttpSession session = request.getSession();
             model.addAttribute("sprint", sprint);
-            if (session.getAttribute("role") != null) {
-                if (session.getAttribute("role").equals("MANAGER")) {
-                    List<Journal> journals = journalService.getJournalsByNameParam("idSprint", sprint.getId());
-                    model.addAttribute("journals", journals);
-                }
-            }
+            model.addAttribute("finish", SprintHelper.finishSprint(sprint));
             return "sprint/sprint";
         } catch (PersistException e) {
             e.printStackTrace();
@@ -150,7 +141,7 @@ public class SprintController {
     /**
      * Servlet for start sprint by id sprint
      * */
-    @RequestMapping(value = "/startSprint", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/startSprint", method = RequestMethod.GET)
     public String start(@RequestParam Integer idSprint) {
         try {
             Sprint sprint = service.getByPK(idSprint);
@@ -169,16 +160,22 @@ public class SprintController {
         return "403";
     }
 
-
-    /**
-     * Method helper, need for set new sprint in project
-     * */
-    private void setSprintInProject(Project project, Sprint sprint) throws PersistException {
-        List<Sprint> list = new ArrayList<>();
-        if (project.getSprints() != null) {
-            list.addAll(Arrays.asList(project.getSprints()));
+    @RequestMapping(value = "/manager/finishSprint", method = RequestMethod.GET)
+    public String finish(@RequestParam Integer idSprint) {
+        try {
+            Sprint sprint = service.getByPK(idSprint);
+            sprint.setFinished(true);
+            service.update(sprint);
+            service.commit();
+            return "redirect:/idSprint?id=" + idSprint;
+        } catch (PersistException | SQLException e){
+            try {
+                service.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.getMessage();
         }
-        list.add(sprint);
-        project.setSprints(list.toArray(new Sprint[list.size()]));
+        return "403";
     }
 }

@@ -41,14 +41,14 @@
         <c:if test="${user.projects ne null and not empty user.projects}">
             <p><b>Your projects : </b></p>
             <c:forEach items="${user.projects}" var="project">
-                <p><b><a href="/idProject?id=${project.id}">${project.name}</a></b></p>
+                <p><b><a href="/maker/idProject?id=${project.id}">${project.name}</a></b></p>
             </c:forEach>
         </c:if>
 
         <c:if test="${user.subordinates ne null}">
             <p><b>Subordinates : </b></p>
             <c:forEach items="${user.subordinates}" var="employee">
-                <p><b><a href="/idEmp?id=${employee.id}">${employee.name} ${employee.surname}</a></b></p>
+                <p><b><a href="/maker/idEmp?id=${employee.id}">${employee.name} ${employee.surname}</a></b></p>
             </c:forEach>
         </c:if>
 
@@ -56,7 +56,7 @@
         <c:if test="${user.subordinates ne null}">
             <p><b>Managed projects : </b></p>
             <c:forEach items="${user.managedProjects}" var="project">
-                <p><b><a href="/idProject?id=${project.id}">${project.name}</a></b></p>
+                <p><b><a href="/maker/idProject?id=${project.id}">${project.name}</a></b></p>
             </c:forEach>
         </c:if>
     </div>

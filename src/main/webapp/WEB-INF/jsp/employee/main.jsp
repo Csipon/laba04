@@ -36,7 +36,7 @@
 
     <h2>Your projects</h2>
     <c:forEach items="${user.projects}" var="project">
-        <p><b><a href="/idProject?id=${project.id}">${project.name}</a></b></p>
+        <p><b><a href="/maker/idProject?id=${project.id}">${project.name}</a></b></p>
     </c:forEach>
 </body>
 </html>

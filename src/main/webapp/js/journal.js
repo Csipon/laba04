@@ -8,7 +8,7 @@ function initRequest() {
 }
 
 function loadJournals(paramName, id, idEmployee) {
-    var url = 'loadJournals?paramName=' + paramName + '&id=' + id + '&idEmployee=' + idEmployee;
+    var url = '/maker/loadJournals?paramName=' + paramName + '&id=' + id + '&idEmployee=' + idEmployee;
 
     initRequest();
 
@@ -49,7 +49,7 @@ function parseJournals(line) {
     for (var i = 0; i < journals.length; i++) {
         var journal = journals[i];
         result +='<div class="journal">';
-        result += '<p>' + journal.task.name +'</p>';
+        result += '<h3>' + journal.task.name +'</h3>';
         if (journal.startTask != null) {
             result += '<p>Start make this task :' + formatDate(new Date(journal.startTask)) + '</p>';
         } else {
@@ -70,7 +70,7 @@ function parseJournals(line) {
 
 var map;
 function showMakers(idJournal) {
-    var url = 'showMakers?idJournal=' + idJournal;
+    var url = '/maker/showMakers?idJournal=' + idJournal;
 
     initRequest();
 

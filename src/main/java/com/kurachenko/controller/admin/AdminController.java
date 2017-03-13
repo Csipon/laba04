@@ -1,6 +1,7 @@
 package com.kurachenko.controller.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kurachenko.entity.Administrator;
 import com.kurachenko.entity.Employee;
 import com.kurachenko.entity.Project;
 import com.kurachenko.entity.ProjectManager;
@@ -10,6 +11,7 @@ import com.kurachenko.service.daoimpl.EmployeeService;
 import com.kurachenko.service.daoimpl.ProjectManagerService;
 import com.kurachenko.service.daoimpl.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +45,14 @@ public class AdminController {
      * */
     private ObjectMapper mapper = new ObjectMapper();
 
+
+    @RequestMapping(value = "/profile" , method = RequestMethod.GET)
+    public String toProfile(Model model){
+        Administrator admin = (Administrator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("admin", admin);
+        return "/admin/profile";
+    }
+
     /**
      * Servlet for assign simple employee manager, and go to list managers
      * @param empId id employee which will be made manager
@@ -50,7 +60,6 @@ public class AdminController {
      * */
     @RequestMapping(value = "/assignManager", method = RequestMethod.POST)
     public String assignManager(Integer empId, Model model) {
-
         try {
             Employee emp = employeeService.getByPK(empId);
             ProjectManager manager = managerService.create();
@@ -106,7 +115,7 @@ public class AdminController {
                 managerService.update(manager);
                 managerService.commit();
             }
-            return "redirect:/admin";
+            return "redirect:/admin/profileAdmin";
         } catch (PersistException | SQLException e) {
             try {
                 managerService.rollback();
@@ -147,7 +156,7 @@ public class AdminController {
      * @param idEmployee employee which will be subordinate in manager
      * @param idManager current manager to which will be added subordinate
      * */
-    @RequestMapping(value = "/addSubordinateToManager", method = RequestMethod.GET)
+    @RequestMapping(value = "/addSubordinateToManager", method = RequestMethod.POST)
     public void addSubordinateToManager(Integer idEmployee, Integer idManager, HttpServletResponse response)  {
         try {
             if (idManager != null && idEmployee != null) {

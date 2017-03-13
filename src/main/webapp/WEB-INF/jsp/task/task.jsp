@@ -10,7 +10,7 @@
     <title>Task</title>
 </head>
 <body>
-    <div class="task">
+    <div class="containerTask">
         <sec:authentication var="user" property="principal" />
         <div class="infoTask">
             <p><b>Task :                </b> ${task.id}</p>
@@ -20,9 +20,9 @@
             <p><b>Level qualification : </b> ${task.levelQualification}</p>
             <p><b>Condition : </b>
                 <c:choose>
-                    <c:when test="${start and !task.isCompleted() and !task.isStarted()}">
+                    <c:when test="${sprintStarted and start and !task.isStarted()}">
                         <p>This task may be a started
-                            <a href="/startTask?idTask=${task.id}&idSprint=${idSprint}">
+                            <a href="/employee/startTask?idTask=${task.id}&idSprint=${idSprint}">
                                 <button>Start</button>
                             </a>
                         </p>
@@ -43,46 +43,51 @@
             </p>
             <p><b>Description :         </b> ${task.description}</p>
             <c:if test="${not empty task.tasks}">
-                <p><b>Tasks which need make that to do this task</b></p>
+                <p>Tasks which need make that to do this task</p>
                 <c:forEach items="${task.tasks}" var="depend">
-                    <h5>${depend.name}</h5>
+                    <h3>${depend.name}</h3>
                     <p>${depend.description}</p>
-                    <a href="/idTask?id=${depend.id}">Go to task</a>
+                    <a href="/maker/idTask?id=${depend.id}">Go to task</a>
                     <p>= = = = = = = = = = = = = = = = = = = = = = = = = </p>
                 </c:forEach>
             </c:if>
-        </div>
+            <c:if test="${task.isStarted() and !task.isCompleted()}">
+                <a href="/employee/finishTask?idTask=${task.id}&idSprint=${idSprint}"><button>Finish</button></a>
+            </c:if>
 
+            <sec:authorize access="hasRole('ROLE_ProjectManager') or hasRole('ROLE_Employee')">
+                <button id="sentMessage" onclick="makeMessage('${user.id}', '${task.id}', '${idSprint}', '${idProject}','simple message')">Send message</button>
+                <br/>
+                <span id="fieldMessage"></span>
+                <br/>
+                <button class="loadMessage" onclick="loadMessage('messageTask', '${task.id}')">Load message</button>
+                <span id="taskMessages"></span>
+            </sec:authorize>
 
-        <c:if test="${task.isStarted() and !task.isCompleted()}">
-            <a href="/finishTask?idTask=${task.id}&idSprint=${idSprint}"><button>Finish</button></a>
-        </c:if>
-        <div class="journals">
-            <button onclick="loadJournals('task', '${task.id}', '${user.id}')">load journals</button>
-            <span id="fieldJournal"></span>
-            <span id="fieldMakers"></span>
-        </div>
-        <div class="clearfix"></div>
-
-        <sec:authorize access="hasRole('ROLE_Employee')">
-            <button id="sentMessage" onclick="makeMessage('${user.id}', '${task.id}', '${idSprint}', '${idProject}','simple message')">Send message</button>
+            <sec:authorize access="hasRole('ROLE_ProjectManager')">
+                <button onclick="deleteTask('${task.id}', '${idSprint}', '${idProject}')">Delete</button>
+            </sec:authorize>
             <br/>
-            <span id="fieldMessage"></span>
-        </sec:authorize>
-
-        <sec:authorize access="hasRole('ROLE_ProjectManager')">
-            <button onclick="deleteTask('${task.id}', '${idSprint}', '${idProject}')">Delete</button>
-        </sec:authorize>
+            <a href="/maker/idSprint?id=${idSprint}&idProject=${idProject}">
+                <button>Back</button>
+            </a>
+        </div>
 
 
-        <sec:authorize access="hasRole('ROLE_ProjectManager or ROLE_Employee')">
-            <button class="loadMessage" onclick="loadMessage('messageTask', '${task.id}')">Load message</button>
-            <span id="taskMessages"></span>
-        </sec:authorize>
-        <br/>
-        <a href="/idSprint?id=${idSprint}&idProject=${idProject}">
-            <button>Back</button>
-        </a>
+        <div class="containerJournal">
+            <div class="journals">
+                <sec:authorize access="hasRole('ROLE_ProjectManager')">
+                    <button onclick="loadSprintJournals('task', '${task.id}')">load journals</button>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_Employee')">
+                    <button onclick="loadJournals('task', '${task.id}', '${user.id}')">load journals</button>
+                </sec:authorize>
+                <span id="fieldJournal"></span>
+                <div class="makers">
+                    <span id="fieldMakers"></span>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

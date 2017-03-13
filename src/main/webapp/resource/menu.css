@@ -1,5 +1,6 @@
 body{
     background: url(../images/bg.png) repeat;
+    font: 100%/14pt sans-serif;
 }
 
 a #back{
@@ -7,14 +8,15 @@ a #back{
 }
 
 .messageblock{
-    width: 400px;
+    margin-top: 1px;
+    background-color: white;
+    width: 370px;
     padding: 15px;
-    border: 1px solid black;
 }
 
 .date{
     padding: 5px 10px;
-    background-color: thistle;
+    background-color: lightgrey;
 }
 
 .date :hover{
@@ -53,10 +55,6 @@ a:hover {  color: #4CAF50;
 
 }
 
-.sprintC{
-    width: auto;
-}
-
 .manager{
     padding-bottom: 30px;
     width: auto;
@@ -75,35 +73,30 @@ table {
     border-collapse:collapse;
 }
 
-.sprint{
-    width: 796px;
-    float: left;
-}
-
-.sprintDetails{
-    font: 16pt bold sans-serif ;
-}
-
 .containerJournal{
     overflow: auto;
     max-height:500px;
-    width: 400px;
+    max-width: 400px;
     float: right;
 }
 
 .journals{
     float: right;
-    width: 400px;
+    max-width: 400px;
 }
 
 .journal{
     text-align: left;
-    padding-left: 20px;
-    border: 1px solid black;
-    padding-bottom: 20px;
-    margin-top: 20px;
+    margin-top: 1px;
+    background-color: white;
+    width: 370px;
+    padding: 15px;
 }
 
+.makers{
+    width: 400px;
+    background-color: lightgreen;
+}
 .showDetails{
     float: left;
 }
@@ -118,29 +111,29 @@ table {
 }
 
 .inform{
-    width: 800px;
+    width:500px;
 }
 
 .messages{
     float: right;
-    width: 390px;
+    width: 400px;
 }
 
 
 .tasks{
-    width: 400px;
+    max-width:400px;
+    max-height:500px;
+    overflow: auto;
     float: left;
-    border: 1px solid blue;
     margin-bottom: 50px;
     margin-top: 30px;
 }
 
 .task{
-    text-align: left;
-    padding-left: 20px;
-    border-top: 1px solid blue;
-    padding-bottom: 20px;
-    margin-top: 20px;
+    margin-top: 1px;
+    background-color: white;
+    width: 350px;
+    padding: 15px;
 }
 
 .infoTask{
@@ -148,14 +141,16 @@ table {
     width: 600px;
 }
 
+.containerTask {
+    min-width:500px;
+}
+
 
 .containerMessage{
     overflow: auto;
     max-height:500px;
-    width: 450px;
+    width: 400px;
 }
-
-
 
 
 .successful{
@@ -167,6 +162,26 @@ table {
     border: 1px solid #bce8f1;
 }
 
+
+/* sprint */
+
+.sprintC{
+    width: auto;
+}
+
+.sprint{
+    font: 100%/14pt sans-serif;
+    width: 796px;
+    float: left;
+}
+
+.sprintDetails{
+    font: 16pt bold sans-serif ;
+}
+
+
+
+/* clear */
 .clearfix{
     clear: both;
 }

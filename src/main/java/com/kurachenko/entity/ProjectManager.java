@@ -1,7 +1,6 @@
 package com.kurachenko.entity;
 
 import com.kurachenko.exception.PersistException;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * this project manager entity, this object isn't passive, he's need for manage his projects and take tasks for
@@ -27,12 +26,12 @@ public class ProjectManager extends Employee {
         setDescription(manager.getDescription());
         setLevelQualification(manager.getLevelQualification());
         setHiredate(manager.getHiredate());
+        this.budget = manager.getBudget();
         try {
             setProjects(manager.getProjects());
             setDepartment(manager.getDepartment());
             this.managedProjects = manager.getManagedProjects();
             this.subordinates = manager.getSubordinates();
-            this.budget = manager.getBudget();
         } catch (PersistException e) {
             e.printStackTrace();
         }

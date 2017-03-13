@@ -1,18 +1,17 @@
 package com.kurachenko.controller.entity;
 
 import com.kurachenko.entity.Customer;
-import com.kurachenko.entity.intarface.Identified;
 import com.kurachenko.exception.PersistException;
 import com.kurachenko.service.daoimpl.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 /**
@@ -25,17 +24,14 @@ public class CustomerController {
     @Autowired
     private CustomerService service;
 
-
     /**
      * Servlet which get id customer and load all customer projects after go on customer main page
-     * @param request need for get customer id and current session
      * */
-    @RequestMapping(value = "customer/profileCustomer", method = RequestMethod.GET)
-    public String profileCustomer(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        Identified object = (Identified) session.getAttribute("user");
+    @RequestMapping(value = "/customer/profileCustomer", method = RequestMethod.GET)
+    public String profileCustomer(Model model){
+        Customer customer = (Customer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
-            session.setAttribute("projects", service.getCustomerProject((Integer) object.getId()));
+            model.addAttribute("projects", service.getCustomerProject(customer.getId()));
         } catch (PersistException e) {
             e.printStackTrace();
         }
@@ -59,25 +55,22 @@ public class CustomerController {
 
     /**
      * Servlet for register new customer, if all good go on admin main page, else go on error page 403
-     * @param customer filled customer from form
      * @param model need for set successful message
      * */
     @RequestMapping(value = "/admin/addCustomer", method = RequestMethod.POST)
-    public String addCustomer(Customer customer, Model model) {
+    public String addCustomer(String name, String surname, String companyName, String description, String password, String login, Model model) {
         try {
-            if (service.validLogin(customer.getLogin())) {
-                Customer temp = service.create();
-                temp.setName(customer.getName());
-                temp.setSurname(customer.getSurname());
-                temp.setCompanyName(customer.getCompanyName());
-                temp.setDescription(customer.getDescription());
-                temp.setLogin(customer.getLogin());
-                temp.setPassword(customer.getPassword());
-                service.update(temp);
-                model.addAttribute("message", "Customer is successful created");
-                service.commit();
-                return "redirect:/admin";
-            }
+            Customer temp = service.create();
+            temp.setName(name);
+            temp.setSurname(surname);
+            temp.setCompanyName(companyName);
+            temp.setDescription(description);
+            temp.setLogin(login);
+            temp.setPassword(password);
+            service.update(temp);
+            model.addAttribute("message", "Customer is successful created");
+            service.commit();
+            return "redirect:/admin/profileAdmin";
         } catch (PersistException | SQLException e) {
             try {
                 service.rollback();
@@ -95,7 +88,7 @@ public class CustomerController {
      * Servlet for get customer ny id
      * @param id request id
      * */
-    @RequestMapping(value = "/idCustomer", method = RequestMethod.GET)
+    @RequestMapping(value = "/maker/idCustomer", method = RequestMethod.GET)
     public String information(@RequestParam Integer id, Model model){
 
         try{
@@ -113,18 +106,17 @@ public class CustomerController {
      * @param id id needed customer
      * @param password password this customer for check
      * */
-    @RequestMapping(value = "/deleteCustomer", method = RequestMethod.GET)
-    public String delete(@RequestParam Integer id, @RequestParam String password){
-
+    @RequestMapping(value = "/admin/deleteCustomer", method = RequestMethod.POST)
+    public void delete(HttpServletResponse response, @RequestParam Integer id, @RequestParam String password){
         try{
             Customer customer = service.getByPK(id);
             if (customer != null){
                 if (customer.getPassword().equals(password)){
                     service.delete(customer);
                     service.commit();
-                    return "redirect:/getAllCustomer";
                 }
             }
+            response.setCharacterEncoding("UTF-8");
         } catch (PersistException | SQLException e) {
             try {
                 service.rollback();
@@ -133,6 +125,5 @@ public class CustomerController {
             }
             e.getMessage();
         }
-        return "404";
     }
 }

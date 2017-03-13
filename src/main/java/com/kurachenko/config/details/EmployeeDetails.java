@@ -8,7 +8,10 @@ import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
-
+/**
+ * @author Pavel Kurachenko
+ * @since 3/4/2017
+ */
 public class EmployeeDetails extends Employee implements UserDetails {
 
     private static final long serialVersionUID = 1L;

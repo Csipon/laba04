@@ -11,7 +11,7 @@ var idProj;
 
 function showFreeEmployeesForSetOnProject(idProject) {
     idProj = idProject;
-    var url = 'admin/showEmpsFreeProject?idProject=' + idProject;
+    var url = '/admin/showEmpsFreeProject?idProject=' + idProject;
     initRequest();
 
     request.onreadystatechange = viewFreeEmployees;
@@ -21,19 +21,19 @@ function showFreeEmployeesForSetOnProject(idProject) {
 
 function viewFreeEmployees() {
     if (request.readyState == 4){
-        document.getElementById('showEmployees').disabled;
+        document.getElementById('showEmployees').disabled = true;
         document.getElementById('listEmployees').innerHTML = parseEmployeesForSetOnProject(request.responseText);
     }
 }
 
-function parseEmployeesForSetOnProject(responce) {
-    var emps = JSON.parse(responce);
+function parseEmployeesForSetOnProject(response) {
+    var emps = JSON.parse(response);
     var result = '';
 
     for (var i = 0; i < emps.length; i++){
         var emp = emps[i];
         result += '<p>' + emp.name + ' ' + emp.surname + ', level qualification - ' + emp.levelQualification +
-            '<a onclick="setEmpToProject(' + emp.id + ',' + idProj + ')">' +
+            '<a href="#" onclick="setEmpToProject(' + emp.id + ',' + idProj + ')">' +
             '<img src="../../../images/add.png">' +
             '</a>' +
             '</p>';
@@ -53,5 +53,22 @@ function setEmpToProject(idEmployee, idProject) {
 function updateViewFreeEmployees() {
     if (request.readyState == 4 && this.status == 200){
         showFreeEmployeesForSetOnProject(idProj);
+    }
+}
+
+//  DELETE PROJECT
+
+function deleteProject(idProject, confirm) {
+    var url = '/admin/deleteProject?id=' + idProject + '&confirm=' + confirm;
+    initRequest();
+
+    request.onreadystatechange = updateAfterDelete;
+    request.open("POST", url, true);
+    request.send();
+}
+
+function updateAfterDelete() {
+    if (request.readyState == 4 && this.status == 200){
+        location.reload();
     }
 }

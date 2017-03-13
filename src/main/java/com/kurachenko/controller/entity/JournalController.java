@@ -11,13 +11,12 @@ import com.kurachenko.service.daoimpl.ProjectService;
 import com.kurachenko.service.daoimpl.SprintService;
 import com.kurachenko.service.daoimpl.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -85,15 +84,12 @@ public class JournalController {
     /**
      * Servlet for get {@code Employee[]} from project manager and transport this array as string
      * in JSON format, if thrown exception then print stack trace
-     * @param request from request get a user and we know that this user ProjectManager, after
-     *                we a get his subordinates as {@code Employee[]}
      * @param response need for write array as string in JSON format
      * */
     @RequestMapping(value = "/manager/loadEmployees", method = RequestMethod.GET)
-    public void loadEmployees(HttpServletRequest request, HttpServletResponse response) {
+    public void loadEmployees(HttpServletResponse response) {
         try {
-            HttpSession session = request.getSession();
-            ProjectManager manager = (ProjectManager) request.getUserPrincipal();
+            ProjectManager manager = (ProjectManager) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(mapper.writeValueAsString(manager.getSubordinates()));
         } catch (PersistException | IOException e) {
@@ -111,8 +107,8 @@ public class JournalController {
      * @param list this array id employee which need add in journal, but list transport as string
      *             in JSON format
      * */
-    @RequestMapping(value = "/manager/addJournal", method = RequestMethod.GET)
-    public void addJournal(Integer idSprint, Integer idTask, String description, String list) {
+    @RequestMapping(value = "/manager/addJournal", method = RequestMethod.POST)
+    public void addJournal(HttpServletResponse response, Integer idSprint, Integer idTask, String description, String list) {
         try {
             Journal temp = service.create();
             temp.setDescription(description);
@@ -121,6 +117,7 @@ public class JournalController {
             temp.setMapEmployee(service.makeMap(Arrays.asList(mapper.readValue(list, Integer[].class))));
             service.update(temp);
             service.commit();
+            response.setCharacterEncoding("UTF-8");
         } catch (PersistException | SQLException e) {
             try {
                 service.rollback();
@@ -143,10 +140,11 @@ public class JournalController {
      *                   if yes then add journal in result list
      * @param response need fir write list of journal as string in JSON format
      * */
-    @RequestMapping(value = "/manager/loadEmployeeTasks", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/loadEmployeeTasks", method = RequestMethod.GET)
     public void loadEmployeeTasks(Integer idSprint, Integer idEmployee, HttpServletResponse response) {
         try {
             List<Journal> allSprintJournals = service.getJournalsByNameParam("idSprint", idSprint);
+            System.out.println(allSprintJournals.size());
             List<Journal> journals = new ArrayList<>();
             for (Journal j : allSprintJournals) {
                 if (j.getMapEmployee().containsKey(idEmployee)) {
@@ -167,7 +165,7 @@ public class JournalController {
      * @param idEmployee this employee for which we will be search journals
      * @param response need for write list journals as string in JSON format
      * */
-    @RequestMapping(value = "/loadJournals", method = RequestMethod.GET)
+    @RequestMapping(value = "/maker/loadJournals", method = RequestMethod.GET)
     public void loadJournals(String paramName, Integer id, Integer idEmployee, HttpServletResponse response){
         try {
             List<Journal> journals = service.getListEmployee(service.getJournalsByNameParam(paramName, id), idEmployee);

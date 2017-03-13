@@ -5,13 +5,13 @@ import com.kurachenko.exception.PersistException;
 import com.kurachenko.service.daoimpl.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 /**
@@ -49,7 +49,7 @@ public class DepartmentController {
             temp.setNumber(department.getNumber());
             service.update(temp);
             service.commit();
-            return "redirect:/admin";
+            return "redirect:/admin/getAllDepartment";
         }  catch (PersistException | SQLException e) {
             try {
                 service.rollback();
@@ -62,7 +62,7 @@ public class DepartmentController {
     }
 
 
-    @RequestMapping(value = "/idDepartment", method = RequestMethod.GET)
+    @RequestMapping(value = "/maker/idDepartment", method = RequestMethod.GET)
     public String information(@RequestParam Integer id, Model model){
         try{
             model.addAttribute("department", service.getByPK(id));
@@ -73,17 +73,15 @@ public class DepartmentController {
     }
 
 
-    @RequestMapping(value = "/admin/deleteDepartment", method = RequestMethod.GET)
-    public String delete(Integer id, Boolean confirm){
+    @RequestMapping(value = "/admin/deleteDepartment", method = RequestMethod.POST)
+    public void delete(HttpServletResponse response, Integer id, Boolean confirm){
         try{
             Department department = service.getByPK(id);
-            if (department != null){
-                if (confirm){
-                    service.delete(department);
-                    service.commit();
-                    return "redirect:/getAllDepartment";
-                }
+            if (department != null && confirm){
+                service.delete(department);
+                service.commit();
             }
+            response.setCharacterEncoding("UTF-8");
         } catch (PersistException | SQLException e) {
             try {
                 service.rollback();
@@ -92,7 +90,6 @@ public class DepartmentController {
             }
             e.getMessage();
         }
-        return "404";
     }
 
     @RequestMapping(value = "/admin/createDepartment", method = RequestMethod.GET)

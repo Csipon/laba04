@@ -5,27 +5,40 @@
 
 body {
     background: url(../images/bg.png) repeat;
-    font: 100%/1.5em sans-serif;
+    font: 100%/14pt sans-serif;
     padding-left: 30px;
     padding-right: 30px;
-    padding-top: 50px;
-    margin: 0;
 }
 
-.addSprint{
-    width: 200px;
-    float: right;
+.sprints {
+    overflow: auto;
+    max-height: 500px;
+    max-width: 400px;
 }
 
+.sprintItem{
+    margin-top: 1px;
+    background-color: white;
+    width: 350px;
+    padding: 15px;
+}
 
 .project{
     width: 500px;
-    float: left;
 }
 
 .container{
-    text-align: center;
+    text-align: left;
     width:auto;
-    padding-left: 70px;
-    padding-right: 70px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+a {
+    color: orangered;
+    border : none;
+    font: normal bold 15px/30px Georgia, serif;
+}
+
+a:hover {  color: #4CAF50;
 }

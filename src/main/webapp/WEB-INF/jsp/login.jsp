@@ -35,9 +35,9 @@
                         <input type="submit"
                                class="btn btn-block btn-primary btn-default" value="Log in">
                     </div>
-                    <input type="hidden"
-                           name="${_csrf.parameterName}"
-                           value="${_csrf.token}"/>
+                    <%--<input type="hidden"--%>
+                           <%--name="${_csrf.parameterName}"--%>
+                           <%--value="${_csrf.token}"/>--%>
                 </form>
             </div>
         </div>

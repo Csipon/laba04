@@ -10,6 +10,7 @@
 <html>
 <head>
     <link href="<c:url value="../../../../resource/menu.css" />" rel="stylesheet">
+    <script src="<c:url value="../../../../js/project.js"/>" type="text/javascript"></script>
     <title>Projects</title>
 </head>
 <body>
@@ -28,19 +29,20 @@
             <c:forEach items="${projectList}" var="project">
                 <tr>
                     <th>${project.id}</th>
-                    <th><a href="/idProject?id=${project.id}">${project.name}</a></th>
+                    <th><a href="/maker/idProject?id=${project.id}">${project.name}</a></th>
                     <th>${project.planedBudget}</th>
                     <th>${project.paid}</th>
                     <th>${project.additionalPayments}</th>
-                    <th><a href="/idCustomer?id=${project.customer.id}">${project.customer.name} ${project.customer.surname}</a></th>
+                    <th><a href="/maker/idCustomer?id=${project.customer.id}">${project.customer.name} ${project.customer.surname}</a></th>
                     <th>${project.description}</th>
                     <th>
-                        <button onclick="confirmDelete(${project.id})">Delete</button>
+                        <button onclick="confirmDelete('${project.id}')">Delete</button>
                     </th>
                 </tr>
             </c:forEach>
         </table>
-        <p id="confirm"></p>
+        <br>
+        <span id="confirm"></span>
         <a href="/admin/profileAdmin">
             <button>Back</button>
         </a>
@@ -51,7 +53,7 @@
                 document.getElementById("confirm").innerHTML =
                     '<br/>'+
                     '<p>Are you really want delete this project? With id ='+ id +'</p>' +
-                    '<a href="/admin/deleteProject?id='+id+'&confirm=true"><img src="../../../../images/delete.png"></a>' +
+                    '<a href="#" onclick="deleteProject(' + id + ', ' + true + ')"><img src="../../../../images/delete.png"></a>' +
                     '<br/>';
             }
         }

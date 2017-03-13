@@ -10,6 +10,7 @@
 <html>
 <head>
     <link href="<c:url value="../../../../resource/menu.css" />" rel="stylesheet">
+    <script src="<c:url value="../../../../js/department.js"/>" type="text/javascript"></script>
     <title>Departments</title>
 </head>
 <body>
@@ -25,20 +26,20 @@
         <c:forEach items="${deptList}" var="department">
             <tr>
                 <th>${department.id}</th>
-                <th><a href="/idDepartment?id=${department.id}">${department.name}</a></th>
+                <th><a href="/maker/idDepartment?id=${department.id}">${department.name}</a></th>
                 <th>${department.number}</th>
                 <th>${department.description}</th>
                 <th>
-                    <button onclick="confirmDelete(${department.id})">Delete</button>
+                    <button onclick="confirmDelete('${department.id}')">Delete</button>
                 </th>
             </tr>
         </c:forEach>
     </table>
-    <p id="confirm"></p>
+    <span id="confirm"></span>
     <br/>
-    <a href="/admin">
-        <button>Back</button>
-    </a>
+        <a href="/admin/profileAdmin">
+            <button>Back</button>
+        </a>
 </div>
 
     <script type="text/javascript">
@@ -47,7 +48,7 @@
                 document.getElementById("confirm").innerHTML =
                     '<br/>'+
                     '<p>Are you really want delete this department? With id ='+ id +'</p>' +
-                    '<a href="/admin/deleteDepartment?id='+id+'&confirm=true"><img src="../../../../images/delete.png"></a>' +
+                    '<a href="" onclick="deleteDepartment(' + id + ', ' + true + ')"><img src="../../../../images/delete.png"></a>' +
                     '<br/>';
             }
         }

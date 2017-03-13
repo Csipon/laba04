@@ -37,7 +37,7 @@
             <input type="button" onclick="saveAdded()" value="SAVE"/>
         </form>
 
-        <a href="/profileMgr"><button>Cancel</button></a>
+        <a href="/manager/profileMgr"><button>Cancel</button></a>
     </div>
 </body>
 </html>

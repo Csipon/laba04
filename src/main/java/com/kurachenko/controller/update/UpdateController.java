@@ -45,7 +45,7 @@ public class UpdateController {
         return "admin/employee/update";
     }
 
-    @RequestMapping(value = "/getSprintUpdate", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/getSprintUpdate", method = RequestMethod.GET)
     public String getSprintUpdate(@RequestParam Integer id, Model model){
         try{
             model.addAttribute("sprint", sprintService.getByPK(id));

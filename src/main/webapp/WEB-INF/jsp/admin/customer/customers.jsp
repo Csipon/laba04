@@ -10,6 +10,7 @@
 <html>
 <head>
     <link href="<c:url value="../../../../resource/menu.css" />" rel="stylesheet">
+    <script src="<c:url value="../../../../js/customer.js"/>" type="text/javascript"></script>
     <title>Customers</title>
 </head>
 <body>
@@ -25,20 +26,20 @@
             <c:forEach items="${customerList}" var="customer">
                 <tr>
                     <th>${customer.id}</th>
-                    <th><a href="/idCustomer?id=${customer.id}">${customer.name}</a></th>
+                    <th><a href="/maker/idCustomer?id=${customer.id}">${customer.name}</a></th>
                     <th>${customer.surname}</th>
                     <th>${customer.companyName}</th>
                     <th>${customer.description}</th>
                     <th><button><a href="/admin/getCustomerUpdate?id=${customer.id}">Update</a></button></th>
                     <th>
-                        <a href="/admin/deleteCustomer?id=${customer.id}&password=${customer.password}">
-                            <img src="../../../../images/delete.png"></a>
+                        <button onclick="deleteCustomer('${customer.id}', '${customer.password}')">
+                            <img src="../../../../images/delete.png"></button>
                     </th>
                 </tr>
             </c:forEach>
         </table>
         <br/>
-        <a href="/admin">
+        <a href="/admin/profileAdmin">
             <button>Back</button>
         </a>
     </div>
